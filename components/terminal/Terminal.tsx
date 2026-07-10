@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { executeCommand } from "@/lib/terminal/commands";
+import { TERMINAL_AI_EVENT } from "@/lib/terminal/events";
 import { useMode } from "@/lib/mode";
 import { profile } from "@/content/profile";
 import { AiChat } from "@/components/terminal/AiChat";
@@ -36,6 +37,26 @@ export function Terminal() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [log, aiActive]);
+
+  useEffect(() => {
+    const onAiRequest = () => {
+      if (aiEnabled) {
+        setAiActive(true);
+      } else {
+        setLog((current) => [
+          ...current,
+          {
+            id: nextId.current++,
+            kind: "output",
+            text: "AI twin is offline in this build — the scripted shell knows everything anyway. Try 'incidents' or 'experience walmart'.",
+          },
+        ]);
+        inputRef.current?.focus();
+      }
+    };
+    window.addEventListener(TERMINAL_AI_EVENT, onAiRequest);
+    return () => window.removeEventListener(TERMINAL_AI_EVENT, onAiRequest);
+  }, [aiEnabled]);
 
   const append = (entries: Omit<LogEntry, "id">[]) => {
     setLog((current) => [

@@ -164,7 +164,7 @@ if (!key) return Response.json({ error: 'ai_unavailable' }, { status: 503 });
 
 **Files:** Create `components/nav/ChapterNav.tsx` (sticky side dots + labels, active-section highlight via IntersectionObserver), `components/nav/CommandPalette.tsx` (⌘K overlay listing jump targets + actions, filter-as-you-type), `components/contact/ContactSection.tsx` (copy-email button with obfuscated mailto assembled at click, GitHub/LinkedIn links, contact form POSTing to `app/api/contact/route.ts` which validates via zod and — until a form service is wired at deploy — returns `{ok:true}` and logs server-side).
 
-- [ ] Implement + commit `feat: navigation, palette, contact`.
+- [x] Implement + commit `feat: navigation, palette, contact`.
 
 ### Task 13: Metadata, a11y & performance polish
 

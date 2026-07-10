@@ -25,7 +25,7 @@ Resume point for the FDE portfolio build. Read this first when continuing from C
 | 9 | Terminal UI (`components/terminal/Terminal.tsx`) | ✅ done |
 | 10 | AI chat route + AiChat UI (503 fallback verified) | ✅ done |
 | 11 | RecruiterView + print-to-PDF (verified at `/?mode=recruiter`) | ✅ done |
-| 12 | ChapterNav + ⌘K CommandPalette + ContactSection + `/api/contact` | ⏸ in progress — `components/nav/ChapterNav.tsx` is written but NOT wired into PortfolioShell and not human-reviewed (session was interrupted mid-task); palette, contact section, and contact route not started |
+| 12 | ChapterNav + ⌘K CommandPalette + ContactSection + `/api/contact` | ✅ done — nav wired + browser-QA'd; palette (Ctrl/⌘K, filter, jump, recruiter/ai actions via `terminal:ai` event); contact form verified end-to-end (valid→200, invalid→400) |
 | 13 | Metadata/OG, a11y + perf audit, Lighthouse, merge to main | ⬜ pending |
 
 ## Key decisions (approved by Aravindhan)
@@ -36,13 +36,11 @@ Resume point for the FDE portfolio build. Read this first when continuing from C
 - Deploy: deferred until build complete; owner has `aravindaart.com`.
 - Thesis copy (exact): "Forward-deployed before it had a name."
 
-## Remaining work (Task 12 → 13)
+## Remaining work (Task 13)
 
-1. Review the existing `components/nav/ChapterNav.tsx` (fixed left dot-nav, IntersectionObserver active state, `lg:` only, `no-print`), then wire it into `PortfolioShell`.
-2. `components/nav/CommandPalette.tsx` — ⌘K overlay, filter-as-you-type, jump targets + recruiter/ai actions.
-3. `components/contact/ContactSection.tsx` (`id="contact"`) — copy-email button (obfuscated mailto), GitHub/LinkedIn links, form → `app/api/contact/route.ts` (zod-validated, logs server-side until a form service is wired).
-4. Wire all three into `components/PortfolioShell.tsx` (story mode only).
-5. Task 13: metadata/OG in `app/layout.tsx`, `app/icon.svg`, reduced-motion/keyboard/contrast audit, Lighthouse ≥95, final commit, merge `feat/site` → `main`.
+1. Metadata/OG in `app/layout.tsx` (title "Aravindhan Mohan — Forward Deployed Engineer", description, OpenGraph), `app/icon.svg`.
+2. Reduced-motion audit, keyboard pass, contrast check (AA), Lighthouse ≥95 via preview; fix findings.
+3. Final commit `chore: metadata + a11y/perf polish`, merge `feat/site` → `main`.
 
 ## Gotchas discovered
 

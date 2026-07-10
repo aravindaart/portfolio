@@ -1,6 +1,9 @@
 "use client";
 
+import { ChapterNav } from "@/components/nav/ChapterNav";
+import { CommandPalette } from "@/components/nav/CommandPalette";
 import { ChapterSection } from "@/components/story/ChapterSection";
+import { ContactSection } from "@/components/contact/ContactSection";
 import { FdeThesis } from "@/components/story/FdeThesis";
 import { Hero } from "@/components/story/Hero";
 import { ModeToggle } from "@/components/recruiter/ModeToggle";
@@ -19,12 +22,15 @@ export function PortfolioShell() {
         <RecruiterView profile={profile} />
       ) : (
         <main>
+          <ChapterNav />
+          <CommandPalette />
           <Hero profile={profile} />
           {profile.chapters.map((chapter) => (
             <ChapterSection key={chapter.id} chapter={chapter} />
           ))}
           <FdeThesis profile={profile} />
           <Terminal />
+          <ContactSection profile={profile} />
         </main>
       )}
     </>
