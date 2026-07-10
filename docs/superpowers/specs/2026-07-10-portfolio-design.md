@@ -84,9 +84,9 @@ Dark AI-terminal aesthetic: near-black background, phosphor-green/cyan accent, m
 
 | Input | Status |
 | --- | --- |
-| Design approval | **Pending — blocks build** |
-| Published email: `sayhi@aravindaart.com` (recommended, needs forwarding) vs `aravindaart23@gmail.com` | Pending — placeholder until decided |
-| LinkedIn URL | Pending — placeholder link until provided |
-| GitHub username (or omit) | Pending — placeholder until provided |
-| Headshot photo | Pending — styled placeholder until provided; drop the file anywhere in the project folder |
-| Domain/deploy | Deferred by choice until build complete |
+| Design approval | **Approved 2026-07-10** |
+| Published email | `sayhi@aravindaart.com` (routing confirmed by owner) |
+| LinkedIn URL | https://www.linkedin.com/in/aravindaart/ |
+| GitHub | https://github.com/aravindaart |
+| Headshot photo | Pending — styled placeholder until file is dropped into the project (e.g. `public/headshot.jpg`) |
+| Domain/deploy | Deferred by choice until build complete (owner has domain `aravindaart.com`) |
