@@ -44,10 +44,18 @@ export function AiChat({ onExit }: { onExit: () => void }) {
   const [busy, setBusy] = useState(false);
   const [offline, setOffline] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages]);
+
+  // Same mobile-keyboard re-settle as the scripted terminal input.
+  const onInputFocus = () => {
+    window.setTimeout(() => {
+      rootRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }, 300);
+  };
 
   const send = async (content: string) => {
     const question = content.trim().slice(0, 1000);
@@ -110,7 +118,7 @@ export function AiChat({ onExit }: { onExit: () => void }) {
   };
 
   return (
-    <div className="flex h-80 flex-col">
+    <div ref={rootRef} className="flex h-80 flex-col">
       <div className="flex items-center justify-between border-b border-edge px-4 py-2">
         <p className="font-mono text-xs text-accent2">
           ai twin — grounded in the profile, cites its sources
@@ -162,11 +170,12 @@ export function AiChat({ onExit }: { onExit: () => void }) {
         <input
           value={input}
           onChange={(event) => setInput(event.target.value)}
+          onFocus={onInputFocus}
           placeholder={
             offline ? "AI offline — type exit" : "ask the AI twin… ('exit' to leave)"
           }
           aria-label="Ask the AI twin a question"
-          className="w-full rounded bg-transparent font-mono text-sm text-text caret-accent outline-none placeholder:text-dim focus-visible:ring-2 focus-visible:ring-accent"
+          className="w-full appearance-none bg-transparent font-mono text-base text-text caret-accent outline-none placeholder:text-dim focus-visible:ring-1 focus-visible:ring-accent sm:text-sm"
         />
       </form>
     </div>

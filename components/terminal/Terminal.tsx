@@ -39,6 +39,16 @@ export function Terminal() {
   const nextId = useRef(WELCOME.length);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  // Mobile keyboards animate open over ~250-300ms; the browser's native
+  // scroll-into-view fires before that finishes and lands in the wrong
+  // place. Re-settle once the keyboard (and viewport resize) has caught up.
+  const onInputFocus = () => {
+    window.setTimeout(() => {
+      boxRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }, 300);
+  };
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
@@ -138,7 +148,10 @@ export function Terminal() {
   };
 
   return (
-    <section id="terminal" className="mx-auto w-full max-w-5xl px-6 py-24">
+    <section
+      id="terminal"
+      className="mx-auto w-full max-w-5xl scroll-mt-6 px-6 py-24"
+    >
       <p className="font-mono text-sm tracking-widest text-accent2 uppercase">
         Chapter 05 — Hands-On
       </p>
@@ -146,7 +159,10 @@ export function Terminal() {
         Don&apos;t read the resume. Query it.
       </h2>
 
-      <div className="mt-10 overflow-hidden rounded-lg border border-edge bg-surface shadow-2xl">
+      <div
+        ref={boxRef}
+        className="mt-10 overflow-hidden rounded-lg border border-edge bg-surface shadow-2xl"
+      >
         <div className="flex items-center gap-1.5 border-b border-edge px-4 py-3">
           <span aria-hidden className="h-3 w-3 rounded-full bg-edge" />
           <span aria-hidden className="h-3 w-3 rounded-full bg-edge" />
@@ -174,18 +190,19 @@ export function Terminal() {
                 {entry.text}
               </p>
             ))}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-base sm:text-sm">
               <span className="shrink-0 text-accent">{PROMPT}</span>
               <input
                 ref={inputRef}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 onKeyDown={onKeyDown}
+                onFocus={onInputFocus}
                 aria-label="Terminal command input"
                 autoComplete="off"
                 autoCapitalize="off"
                 spellCheck={false}
-                className="w-full rounded bg-transparent text-text caret-accent outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="w-full appearance-none bg-transparent text-text caret-accent outline-none focus-visible:ring-1 focus-visible:ring-accent"
               />
             </div>
           </div>

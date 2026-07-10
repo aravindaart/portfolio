@@ -129,7 +129,7 @@ export function CommandPalette() {
             }
             autoComplete="off"
             spellCheck={false}
-            className="w-full rounded bg-transparent font-mono text-sm text-text outline-none placeholder:text-dim focus-visible:ring-2 focus-visible:ring-accent"
+            className="w-full appearance-none rounded bg-transparent font-mono text-base text-text outline-none placeholder:text-dim focus-visible:ring-1 focus-visible:ring-accent sm:text-sm"
           />
           <kbd className="rounded border border-edge px-1.5 py-0.5 font-mono text-[10px] text-dim">
             esc

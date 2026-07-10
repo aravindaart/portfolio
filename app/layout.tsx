@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -40,6 +40,13 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
   },
+};
+
+// resizes-content: the layout viewport shrinks when the on-screen keyboard
+// opens (instead of only the visual viewport), so svh-based sections and
+// the terminal's scroll-into-view don't leave a dead gap above the keyboard.
+export const viewport: Viewport = {
+  interactiveWidget: "resizes-content",
 };
 
 export default function RootLayout({

@@ -120,7 +120,7 @@ export function ContactSection({ profile }: { profile: Profile }) {
                   required
                   maxLength={100}
                   autoComplete="name"
-                  className="w-full rounded border border-edge bg-surface px-3 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
+                  className="w-full rounded border border-edge bg-surface px-3 py-3 text-base text-text outline-none transition-colors focus:border-accent sm:text-sm"
                 />
               </label>
               <label className="block">
@@ -133,7 +133,7 @@ export function ContactSection({ profile }: { profile: Profile }) {
                   required
                   maxLength={200}
                   autoComplete="email"
-                  className="w-full rounded border border-edge bg-surface px-3 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
+                  className="w-full rounded border border-edge bg-surface px-3 py-3 text-base text-text outline-none transition-colors focus:border-accent sm:text-sm"
                 />
               </label>
               <label className="block">
@@ -145,7 +145,7 @@ export function ContactSection({ profile }: { profile: Profile }) {
                   required
                   maxLength={2000}
                   rows={4}
-                  className="w-full rounded border border-edge bg-surface px-3 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
+                  className="w-full rounded border border-edge bg-surface px-3 py-3 text-base text-text outline-none transition-colors focus:border-accent sm:text-sm"
                 />
               </label>
               <div className="flex items-center gap-3">
