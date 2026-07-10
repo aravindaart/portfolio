@@ -7,6 +7,8 @@ import { Scanline } from "@/components/effects/Scanline";
 /**
  * Renders /headshot.jpg with a scanline treatment; falls back to a styled
  * terminal-avatar block until the photo file exists in /public.
+ * headshot.jpg is pre-cropped square (top-anchored, full head + shoulders)
+ * so object-fit:cover needs no position bias here.
  */
 export function Headshot({
   name,
@@ -38,7 +40,7 @@ export function Headshot({
             alt={`Portrait of ${name}`}
             fill
             sizes="(min-width: 640px) 14rem, 11rem"
-            className="object-cover object-[center_30%] saturate-90 brightness-95"
+            className="object-cover saturate-90 brightness-95"
             onError={() => setMissing(true)}
             priority
           />
