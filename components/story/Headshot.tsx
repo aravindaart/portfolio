@@ -5,10 +5,12 @@ import { useState } from "react";
 import { Scanline } from "@/components/effects/Scanline";
 
 /**
- * Renders /headshot.jpg with a scanline treatment; falls back to a styled
- * terminal-avatar block until the photo file exists in /public.
- * headshot.jpg is pre-cropped square (top-anchored, full head + shoulders)
- * so object-fit:cover needs no position bias here.
+ * Renders /headshot-v2.jpg with a scanline treatment; falls back to a
+ * styled terminal-avatar block until the photo file exists in /public.
+ * Pre-cropped square (top-anchored, full head + shoulders) so
+ * object-fit:cover needs no position bias here. Filename is versioned —
+ * Next's image optimizer caches by URL for 4h, so any future photo swap
+ * needs a new filename (not an overwrite) to bust client-side caches.
  */
 export function Headshot({
   name,
@@ -36,7 +38,7 @@ export function Headshot({
       ) : (
         <>
           <Image
-            src="/headshot.jpg"
+            src="/headshot-v2.jpg"
             alt={`Portrait of ${name}`}
             fill
             sizes="(min-width: 640px) 14rem, 11rem"
