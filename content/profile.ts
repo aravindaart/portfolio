@@ -83,7 +83,7 @@ export const profile: Profile = {
       ],
       highlights: [
         "Own frontend architecture and production stability for TypeScript/React platforms serving thousands of daily users",
-        "Led end-to-end response to a production OTP-abuse incident (timeline below)",
+        "Led end-to-end response to a production OTP-abuse incident — detection, mitigation, and long-term hardening across four teams",
         "Partner with DevOps and infrastructure on observability, CI/CD, and zero-downtime release reliability",
         "Drive root cause analysis for frontend production incidents and preventive engineering",
         "Mentor engineers on advanced React patterns, performance tuning, and scalable UI architecture",
