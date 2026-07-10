@@ -36,13 +36,18 @@ Resume point for the FDE portfolio build. Read this first when continuing from C
 - Deploy: deferred until build complete; owner has `aravindaart.com`.
 - Thesis copy (exact): "Forward-deployed before it had a name."
 
+## Post-launch fixes (2026-07-10, same day)
+
+- Design review pass: 6 findings fixed (mobile hero viewport overflow, Recruiter Mode contact links not clickable, touch targets across contact form/palette/AI chat, keyboard focus-visible + ARIA gaps). Full report: `~/.gstack/projects/portfolio/designs/design-audit-20260710/`.
+- Mobile terminal input fixed: iOS Safari was auto-zooming/jumping on focus because the input rendered under 16px. All site inputs now 16px on mobile; added `interactiveWidget: 'resizes-content'` viewport meta so the keyboard doesn't leave a dead gap.
+- Headshot photo added at `public/headshot.jpg` with a CSS vignette (`components/story/Headshot.tsx`) so the photo's bright background blends into the dark theme instead of reading as a cutout.
+
 ## Remaining work
 
-Build complete (Tasks 1–13). Outstanding items owned by Aravindhan:
+Build complete (Tasks 1–13), design-reviewed, headshot live. Outstanding items owned by Aravindhan:
 
-1. Drop the photo at `public/headshot.jpg` (auto-detected server-side; placeholder shows until then).
-2. Deploy (owner has `aravindaart.com`; `metadataBase` already points there). Set `AI_GATEWAY_API_KEY` + `NEXT_PUBLIC_AI_ENABLED=1` to activate the AI twin.
-3. Wire a real form service into `app/api/contact/route.ts` (currently logs server-side and returns `{ok:true}`).
+1. Deploy (owner has `aravindaart.com`; `metadataBase` already points there). Set `AI_GATEWAY_API_KEY` + `NEXT_PUBLIC_AI_ENABLED=1` to activate the AI twin.
+2. Wire a real form service into `app/api/contact/route.ts` (currently logs server-side and returns `{ok:true}`).
 
 ## Gotchas discovered
 
