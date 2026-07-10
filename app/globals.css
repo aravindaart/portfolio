@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #060a0f;
+  --color-surface: #0b1118;
+  --color-surface2: #101a24;
+  --color-edge: #1c2a38;
+  --color-accent: #22d3ae;
+  --color-accent2: #67e8f9;
+  --color-warn: #fbbf24;
+  --color-text: #d7e2ea;
+  --color-dim: #7b8a96;
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* Subtle background grid */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(103 232 249 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(103 232 249 / 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Terminal caret blink */
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--color-accent);
+  animation: caret-blink 1s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .caret { animation: none; }
+}
+
+/* Scanline overlay for imagery */
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgb(6 10 15 / 0.25) 3px,
+    transparent 4px
+  );
+}
+
+/* Print / PDF resume styles (Recruiter Mode) */
+@media print {
+  body {
+    background: #ffffff;
+    color: #111111;
+  }
+  .no-print {
+    display: none !important;
+  }
+  a {
+    color: #111111;
+    text-decoration: none;
+  }
+}
