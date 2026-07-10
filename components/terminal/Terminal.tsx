@@ -185,7 +185,7 @@ export function Terminal() {
                 autoComplete="off"
                 autoCapitalize="off"
                 spellCheck={false}
-                className="w-full bg-transparent text-text caret-accent outline-none"
+                className="w-full rounded bg-transparent text-text caret-accent outline-none focus-visible:ring-2 focus-visible:ring-accent"
               />
             </div>
           </div>

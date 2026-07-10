@@ -118,7 +118,7 @@ export function AiChat({ onExit }: { onExit: () => void }) {
         <button
           type="button"
           onClick={onExit}
-          className="font-mono text-xs text-dim hover:text-accent"
+          className="rounded px-2 py-2 font-mono text-xs text-dim hover:text-accent"
         >
           [exit]
         </button>
@@ -135,7 +135,7 @@ export function AiChat({ onExit }: { onExit: () => void }) {
                 key={suggestion}
                 type="button"
                 onClick={() => void send(suggestion)}
-                className="block rounded border border-edge px-3 py-1.5 text-left font-mono text-xs text-text/80 hover:border-accent"
+                className="block w-full rounded border border-edge px-3 py-2.5 text-left font-mono text-xs text-text/80 hover:border-accent"
               >
                 {suggestion}
               </button>
@@ -166,7 +166,7 @@ export function AiChat({ onExit }: { onExit: () => void }) {
             offline ? "AI offline — type exit" : "ask the AI twin… ('exit' to leave)"
           }
           aria-label="Ask the AI twin a question"
-          className="w-full bg-transparent font-mono text-sm text-text caret-accent outline-none placeholder:text-dim"
+          className="w-full rounded bg-transparent font-mono text-sm text-text caret-accent outline-none placeholder:text-dim focus-visible:ring-2 focus-visible:ring-accent"
         />
       </form>
     </div>

@@ -121,27 +121,44 @@ export function CommandPalette() {
             onKeyDown={onInputKeyDown}
             placeholder="Type to filter — chapters, actions…"
             aria-label="Filter commands"
+            role="combobox"
+            aria-expanded="true"
+            aria-controls="palette-options"
+            aria-activedescendant={
+              visible[cursor] ? `palette-option-${visible[cursor].id}` : undefined
+            }
             autoComplete="off"
             spellCheck={false}
-            className="w-full bg-transparent font-mono text-sm text-text outline-none placeholder:text-dim"
+            className="w-full rounded bg-transparent font-mono text-sm text-text outline-none placeholder:text-dim focus-visible:ring-2 focus-visible:ring-accent"
           />
           <kbd className="rounded border border-edge px-1.5 py-0.5 font-mono text-[10px] text-dim">
             esc
           </kbd>
         </div>
-        <ul role="listbox" aria-label="Commands" className="max-h-72 overflow-y-auto p-2">
+        <ul
+          id="palette-options"
+          role="listbox"
+          aria-label="Commands"
+          className="max-h-72 overflow-y-auto p-2"
+        >
           {visible.length === 0 && (
             <li className="px-3 py-2 font-mono text-sm text-dim">
               no matches — try &apos;walmart&apos; or &apos;recruiter&apos;
             </li>
           )}
           {visible.map((item, index) => (
-            <li key={item.id} role="option" aria-selected={index === cursor}>
+            <li
+              key={item.id}
+              id={`palette-option-${item.id}`}
+              role="option"
+              aria-selected={index === cursor}
+            >
               <button
                 type="button"
                 onClick={() => select(item)}
                 onMouseEnter={() => setCursor(index)}
-                className={`flex w-full items-center justify-between rounded px-3 py-2 text-left font-mono text-sm transition-colors ${
+                tabIndex={-1}
+                className={`flex w-full items-center justify-between rounded px-3 py-3 text-left font-mono text-sm transition-colors ${
                   index === cursor
                     ? "bg-surface2 text-accent"
                     : "text-text/80"
