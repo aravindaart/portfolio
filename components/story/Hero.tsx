@@ -47,7 +47,7 @@ export function Hero({
             {profile.identity.title}
           </p>
 
-          <div className="mt-8 rounded-lg border border-edge bg-surface/80 p-4 font-mono text-sm text-dim backdrop-blur">
+          <div className="mt-8 rounded-lg border border-edge bg-surface/80 p-4 font-mono text-xs text-dim backdrop-blur sm:text-sm">
             <div className="mb-3 flex gap-1.5" aria-hidden>
               <span className="h-2.5 w-2.5 rounded-full bg-edge" />
               <span className="h-2.5 w-2.5 rounded-full bg-edge" />
@@ -62,7 +62,7 @@ export function Hero({
                     {line}
                   </p>
                 ))}
-                <p className="mt-2 text-base">{`“${profile.identity.thesis}”`}</p>
+                <p className="mt-2 text-sm sm:text-base">{`“${profile.identity.thesis}”`}</p>
               </div>
               <div className="col-start-1 row-start-1">
                 {BOOT_LINES.slice(0, bootStep + 1).map((line, i) => (
@@ -80,7 +80,7 @@ export function Hero({
                   </p>
                 ))}
                 {bootStep >= BOOT_LINES.length && (
-                  <p className="mt-2 text-base text-accent">
+                  <p className="mt-2 text-sm text-accent sm:text-base">
                     <TypingText
                       text={`“${profile.identity.thesis}”`}
                       speed={40}

@@ -23,7 +23,7 @@ export function Headshot({
     .join("");
 
   return (
-    <Scanline className="h-44 w-44 shrink-0 rounded-2xl border border-edge bg-surface sm:h-56 sm:w-56">
+    <Scanline className="h-32 w-32 shrink-0 rounded-2xl border border-edge bg-surface sm:h-56 sm:w-56">
       {!available || missing ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2 font-mono">
           <span className="text-5xl text-accent">{initials}</span>
