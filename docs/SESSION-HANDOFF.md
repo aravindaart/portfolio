@@ -25,7 +25,7 @@ Resume point for the FDE portfolio build. Read this first when continuing from C
 | 9 | Terminal UI (`components/terminal/Terminal.tsx`) | ✅ done |
 | 10 | AI chat route + AiChat UI (503 fallback verified) | ✅ done |
 | 11 | RecruiterView + print-to-PDF (verified at `/?mode=recruiter`) | ✅ done |
-| 12 | ChapterNav + ⌘K CommandPalette + ContactSection + `/api/contact` | ⏸ in progress — ChapterNav write was interrupted; nothing of Task 12 is on disk yet |
+| 12 | ChapterNav + ⌘K CommandPalette + ContactSection + `/api/contact` | ⏸ in progress — `components/nav/ChapterNav.tsx` is written but NOT wired into PortfolioShell and not human-reviewed (session was interrupted mid-task); palette, contact section, and contact route not started |
 | 13 | Metadata/OG, a11y + perf audit, Lighthouse, merge to main | ⬜ pending |
 
 ## Key decisions (approved by Aravindhan)
@@ -38,7 +38,7 @@ Resume point for the FDE portfolio build. Read this first when continuing from C
 
 ## Remaining work (Task 12 → 13)
 
-1. `components/nav/ChapterNav.tsx` — fixed left dot-nav (hero/tcs/walmart/uob/thesis/terminal/contact), IntersectionObserver active state, `lg:` only, `no-print`.
+1. Review the existing `components/nav/ChapterNav.tsx` (fixed left dot-nav, IntersectionObserver active state, `lg:` only, `no-print`), then wire it into `PortfolioShell`.
 2. `components/nav/CommandPalette.tsx` — ⌘K overlay, filter-as-you-type, jump targets + recruiter/ai actions.
 3. `components/contact/ContactSection.tsx` (`id="contact"`) — copy-email button (obfuscated mailto), GitHub/LinkedIn links, form → `app/api/contact/route.ts` (zod-validated, logs server-side until a form service is wired).
 4. Wire all three into `components/PortfolioShell.tsx` (story mode only).
