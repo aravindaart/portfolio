@@ -32,15 +32,24 @@ export function Headshot({
           </span>
         </div>
       ) : (
-        <Image
-          src="/headshot.jpg"
-          alt={`Portrait of ${name}`}
-          fill
-          sizes="(min-width: 640px) 14rem, 11rem"
-          className="object-cover"
-          onError={() => setMissing(true)}
-          priority
-        />
+        <>
+          <Image
+            src="/headshot.jpg"
+            alt={`Portrait of ${name}`}
+            fill
+            sizes="(min-width: 640px) 14rem, 11rem"
+            className="object-cover object-[center_30%] saturate-90 brightness-95"
+            onError={() => setMissing(true)}
+            priority
+          />
+          {/* Vignette: the photo's bright office background otherwise reads
+              as a cutout against the dark theme; this fades it into the
+              card edge without touching the source image. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 [background:radial-gradient(circle_at_50%_35%,transparent_35%,var(--color-bg)_125%)] opacity-70"
+          />
+        </>
       )}
     </Scanline>
   );
