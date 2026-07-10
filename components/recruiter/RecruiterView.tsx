@@ -2,6 +2,11 @@
 
 import type { Profile } from "@/lib/types";
 
+/** Strips the protocol and www for a compact on-screen label; href keeps the full URL. */
+function shortUrl(url: string): string {
+  return url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+}
+
 /**
  * Condensed, animation-free, ATS-friendly single page.
  * Print styles in globals.css turn this into the PDF resume.
@@ -16,9 +21,35 @@ export function RecruiterView({ profile }: { profile: Profile }) {
         <p className="mt-1 text-dim print:text-neutral-700">
           {profile.identity.title} · {profile.identity.location}
         </p>
-        <p className="mt-2 font-mono text-sm text-accent print:text-neutral-700">
-          {profile.contact.email} · {profile.contact.github} ·{" "}
-          {profile.contact.linkedin}
+        <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-sm text-accent print:text-neutral-700">
+          <a
+            href={`mailto:${profile.contact.email}`}
+            className="hover:underline print:text-neutral-700"
+          >
+            {profile.contact.email}
+          </a>
+          <span aria-hidden className="text-dim print:text-neutral-400">
+            ·
+          </span>
+          <a
+            href={profile.contact.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline print:text-neutral-700"
+          >
+            {shortUrl(profile.contact.github)}
+          </a>
+          <span aria-hidden className="text-dim print:text-neutral-400">
+            ·
+          </span>
+          <a
+            href={profile.contact.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline print:text-neutral-700"
+          >
+            {shortUrl(profile.contact.linkedin)}
+          </a>
         </p>
         <button
           type="button"

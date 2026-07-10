@@ -68,14 +68,14 @@ export function ContactSection({ profile }: { profile: Profile }) {
                 <button
                   type="button"
                   onClick={copyEmail}
-                  className="rounded border border-accent px-4 py-2 font-mono text-sm text-accent transition-colors hover:bg-accent hover:text-bg"
+                  className="rounded border border-accent px-4 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent hover:text-bg"
                 >
                   {copied ? "copied ✓" : "copy email"}
                 </button>
                 <button
                   type="button"
                   onClick={openMail}
-                  className="rounded border border-edge px-4 py-2 font-mono text-sm text-dim transition-colors hover:border-accent2 hover:text-accent2"
+                  className="rounded border border-edge px-4 py-3 font-mono text-sm text-dim transition-colors hover:border-accent2 hover:text-accent2"
                 >
                   open mail app
                 </button>
@@ -120,7 +120,7 @@ export function ContactSection({ profile }: { profile: Profile }) {
                   required
                   maxLength={100}
                   autoComplete="name"
-                  className="w-full rounded border border-edge bg-surface px-3 py-2 text-sm text-text outline-none transition-colors focus:border-accent"
+                  className="w-full rounded border border-edge bg-surface px-3 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
                 />
               </label>
               <label className="block">
@@ -133,7 +133,7 @@ export function ContactSection({ profile }: { profile: Profile }) {
                   required
                   maxLength={200}
                   autoComplete="email"
-                  className="w-full rounded border border-edge bg-surface px-3 py-2 text-sm text-text outline-none transition-colors focus:border-accent"
+                  className="w-full rounded border border-edge bg-surface px-3 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
                 />
               </label>
               <label className="block">
@@ -145,14 +145,14 @@ export function ContactSection({ profile }: { profile: Profile }) {
                   required
                   maxLength={2000}
                   rows={4}
-                  className="w-full rounded border border-edge bg-surface px-3 py-2 text-sm text-text outline-none transition-colors focus:border-accent"
+                  className="w-full rounded border border-edge bg-surface px-3 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
                 />
               </label>
               <div className="flex items-center gap-3">
                 <button
                   type="submit"
                   disabled={sendState === "sending"}
-                  className="rounded bg-accent px-4 py-2 font-mono text-sm font-semibold text-bg transition-opacity hover:opacity-90 disabled:opacity-50"
+                  className="rounded bg-accent px-4 py-3 font-mono text-sm font-semibold text-bg transition-opacity hover:opacity-90 disabled:opacity-50"
                 >
                   {sendState === "sending" ? "sending…" : "send message"}
                 </button>

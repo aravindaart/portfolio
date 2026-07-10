@@ -161,7 +161,7 @@ export function Terminal() {
         ) : (
           <div
             ref={scrollRef}
-            className="h-80 overflow-y-auto p-4 font-mono text-sm"
+            className="h-80 overflow-y-auto p-4 font-mono text-sm [mask-image:linear-gradient(to_bottom,transparent,black_16px)]"
             onClick={() => inputRef.current?.focus()}
           >
             {log.map((entry) => (
