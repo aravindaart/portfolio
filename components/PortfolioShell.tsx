@@ -12,7 +12,7 @@ import { Terminal } from "@/components/terminal/Terminal";
 import { useMode } from "@/lib/mode";
 import { profile } from "@/content/profile";
 
-export function PortfolioShell() {
+export function PortfolioShell({ hasHeadshot }: { hasHeadshot: boolean }) {
   const { mode } = useMode();
 
   return (
@@ -24,7 +24,7 @@ export function PortfolioShell() {
         <main>
           <ChapterNav />
           <CommandPalette />
-          <Hero profile={profile} />
+          <Hero profile={profile} hasHeadshot={hasHeadshot} />
           {profile.chapters.map((chapter) => (
             <ChapterSection key={chapter.id} chapter={chapter} />
           ))}

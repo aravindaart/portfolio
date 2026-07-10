@@ -54,7 +54,8 @@ export function TypingText({
   }, [done, onDone]);
 
   return (
-    <span className={className} aria-label={text}>
+    <span className={className}>
+      <span className="sr-only">{text}</span>
       <span aria-hidden>{text.slice(0, count)}</span>
       {showCaret && <span className="caret" aria-hidden />}
     </span>

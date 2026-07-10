@@ -18,7 +18,13 @@ const BOOT_LINES = [
   "> role.target = forward_deployed_engineer",
 ];
 
-export function Hero({ profile }: { profile: Profile }) {
+export function Hero({
+  profile,
+  hasHeadshot,
+}: {
+  profile: Profile;
+  hasHeadshot: boolean;
+}) {
   const [bootStep, setBootStep] = useState(0);
 
   return (
@@ -28,7 +34,7 @@ export function Hero({ profile }: { profile: Profile }) {
     >
       <ParticleField className="absolute inset-0 h-full w-full" />
       <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 py-24 sm:flex-row sm:items-center sm:gap-14">
-        <Headshot name={profile.identity.name} />
+        <Headshot name={profile.identity.name} available={hasHeadshot} />
         <div className="min-w-0">
           {/* Identity is plain SSR HTML — visible before any animation runs. */}
           <p className="font-mono text-sm text-accent">
@@ -47,29 +53,43 @@ export function Hero({ profile }: { profile: Profile }) {
               <span className="h-2.5 w-2.5 rounded-full bg-edge" />
               <span className="h-2.5 w-2.5 rounded-full bg-accent/60" />
             </div>
-            {BOOT_LINES.slice(0, bootStep + 1).map((line, i) => (
-              <p key={line} className="leading-relaxed">
-                {i === bootStep ? (
-                  <TypingText
-                    text={line}
-                    onDone={() =>
-                      setBootStep((s) => Math.min(s + 1, BOOT_LINES.length))
-                    }
-                  />
-                ) : (
-                  line
+            {/* Invisible fully-typed copy reserves the final height, so the
+                typing animation never shifts layout (stable CLS/LCP). */}
+            <div className="grid">
+              <div className="invisible col-start-1 row-start-1" aria-hidden>
+                {BOOT_LINES.map((line) => (
+                  <p key={line} className="leading-relaxed">
+                    {line}
+                  </p>
+                ))}
+                <p className="mt-2 text-base">{`“${profile.identity.thesis}”`}</p>
+              </div>
+              <div className="col-start-1 row-start-1">
+                {BOOT_LINES.slice(0, bootStep + 1).map((line, i) => (
+                  <p key={line} className="leading-relaxed">
+                    {i === bootStep ? (
+                      <TypingText
+                        text={line}
+                        onDone={() =>
+                          setBootStep((s) => Math.min(s + 1, BOOT_LINES.length))
+                        }
+                      />
+                    ) : (
+                      line
+                    )}
+                  </p>
+                ))}
+                {bootStep >= BOOT_LINES.length && (
+                  <p className="mt-2 text-base text-accent">
+                    <TypingText
+                      text={`“${profile.identity.thesis}”`}
+                      speed={40}
+                      showCaret
+                    />
+                  </p>
                 )}
-              </p>
-            ))}
-            {bootStep >= BOOT_LINES.length && (
-              <p className="mt-2 text-base text-accent">
-                <TypingText
-                  text={`“${profile.identity.thesis}”`}
-                  speed={40}
-                  showCaret
-                />
-              </p>
-            )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

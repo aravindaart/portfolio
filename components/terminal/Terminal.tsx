@@ -1,11 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { executeCommand } from "@/lib/terminal/commands";
 import { TERMINAL_AI_EVENT } from "@/lib/terminal/events";
 import { useMode } from "@/lib/mode";
 import { profile } from "@/content/profile";
-import { AiChat } from "@/components/terminal/AiChat";
+
+// The AI SDK client only ships when a visitor actually activates the twin.
+const AiChat = dynamic(
+  () => import("@/components/terminal/AiChat").then((m) => m.AiChat),
+  { ssr: false },
+);
 
 const PROMPT = "guest@aravindaart:~$";
 

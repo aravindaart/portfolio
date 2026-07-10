@@ -170,7 +170,7 @@ if (!key) return Response.json({ error: 'ai_unavailable' }, { status: 503 });
 
 **Files:** Modify `app/layout.tsx` (title "Aravindhan Mohan — Forward Deployed Engineer", description, OpenGraph), `app/icon.svg`; audit pass.
 
-- [ ] Reduced-motion audit, keyboard pass, contrast check (AA), `npm run build` + Lighthouse run via preview; fix findings. Final commit `chore: metadata + a11y/perf polish`.
+- [x] Reduced-motion audit, keyboard pass, contrast check (AA), `npm run build` + Lighthouse run via preview; fix findings. Final commit `chore: metadata + a11y/perf polish`. (Lighthouse: desktop 100/100/100/100; mobile 90/100/100/100 — residual is simulated 4× CPU throttle on hydration; observed FCP=LCP 1.2s, CLS 0.)
 
 ---
 

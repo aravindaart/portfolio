@@ -11,19 +11,19 @@ export function IncidentTimeline({ steps }: { steps: TimelineStep[] }) {
       </p>
       <ol className="relative space-y-8 border-l border-edge pl-6">
         {steps.map((step, index) => (
-          <Reveal key={step.phase} delay={index * 0.12}>
-            <li className="relative">
-              <span
-                aria-hidden
-                className="absolute -left-[31px] top-1 h-2.5 w-2.5 rounded-full border border-accent bg-bg"
-              />
+          <li key={step.phase} className="relative">
+            <span
+              aria-hidden
+              className="absolute -left-[31px] top-1 h-2.5 w-2.5 rounded-full border border-accent bg-bg"
+            />
+            <Reveal delay={index * 0.12}>
               <p className="font-mono text-xs text-accent">{step.phase}</p>
               <p className="mt-1 font-semibold text-text">{step.title}</p>
               <p className="mt-1 text-sm leading-relaxed text-dim">
                 {step.detail}
               </p>
-            </li>
-          </Reveal>
+            </Reveal>
+          </li>
         ))}
       </ol>
     </div>
