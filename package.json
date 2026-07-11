@@ -13,6 +13,8 @@
   "dependencies": {
     "@ai-sdk/google": "^3.0.91",
     "@ai-sdk/react": "^3.0.224",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
     "ai": "^6.0.222",
     "motion": "^12.42.2",
     "next": "16.2.10",

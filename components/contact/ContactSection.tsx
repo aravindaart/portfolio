@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Reveal } from "@/components/story/Reveal";
 import type { Profile } from "@/lib/types";
 
-type SendState = "idle" | "sending" | "sent" | "error";
+type SendState = "idle" | "sending" | "sent" | "error" | "rate-limited";
 
 export function ContactSection({ profile }: { profile: Profile }) {
   const [copied, setCopied] = useState(false);
@@ -41,6 +41,10 @@ export function ContactSection({ profile }: { profile: Profile }) {
           message: data.get("message"),
         }),
       });
+      if (response.status === 429) {
+        setSendState("rate-limited");
+        return;
+      }
       if (!response.ok) throw new Error(`status ${response.status}`);
       setSendState("sent");
       form.reset();
@@ -160,6 +164,8 @@ export function ContactSection({ profile }: { profile: Profile }) {
                   {sendState === "sent" && "delivered — expect a reply soon."}
                   {sendState === "error" &&
                     "delivery failed — use the email button instead."}
+                  {sendState === "rate-limited" &&
+                    "too many messages sent recently — try again shortly, or use the email button instead."}
                 </p>
               </div>
             </form>

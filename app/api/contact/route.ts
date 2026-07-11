@@ -1,10 +1,19 @@
 import { Resend } from "resend";
 import { contactGuard } from "@/lib/contact/contact-guard";
 import { formatContactEmail } from "@/lib/contact/format-email";
+import { checkContactRateLimit, getClientIp } from "@/lib/contact/rate-limit";
 import { profile } from "@/content/profile";
 
 export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
+
+  const rateLimitVerdict = await checkContactRateLimit(getClientIp(request));
+  if (!rateLimitVerdict.ok) {
+    return Response.json(
+      { error: rateLimitVerdict.error },
+      { status: rateLimitVerdict.status },
+    );
+  }
 
   let body: unknown;
   try {
