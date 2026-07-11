@@ -34,12 +34,18 @@ export function ModeProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<ModeContextValue>(
     () => ({
       mode,
-      toggle: () =>
-        setMode((current) => {
-          const next: Mode = current === "story" ? "recruiter" : "story";
-          localStorage.setItem(STORAGE_KEY, next);
-          return next;
-        }),
+      // Story and Recruiter Mode are different documents, not a scroll
+      // position on the same one — keeping the old scrollY after a swap
+      // can land the visitor on blank space or an unrelated section of
+      // the new (much shorter) layout. Only the explicit toggle resets
+      // scroll; the initial mode resolution below must not, or it would
+      // fight a deep link's anchor scroll on first load.
+      toggle: () => {
+        const next: Mode = mode === "story" ? "recruiter" : "story";
+        localStorage.setItem(STORAGE_KEY, next);
+        window.scrollTo({ top: 0 });
+        setMode(next);
+      },
     }),
     [mode],
   );
