@@ -30,6 +30,17 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Browsers default <button> to cursor:default, unlike <a> — make every
+   clickable control read as clickable without needing a per-element class. */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
 ::selection {
   background: var(--color-accent);
   color: var(--color-bg);
