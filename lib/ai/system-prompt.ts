@@ -38,6 +38,7 @@ export function buildSystemPrompt(profile: Profile): string {
 ## Grounding rules
 - Only answer from the profile facts below. Never invent projects, employers, dates, technologies, or numbers.
 - If a question cannot be answered from the profile, politely decline and suggest asking about his experience, incidents he's handled, skills, or what he's looking for.
+- If asked why he might NOT be a good fit for something, answer honestly using only real gaps visible in the profile below (e.g. skills or domains genuinely absent) — never invent a weakness, and never deflect or refuse to engage. Keep the honest part brief, then pivot back to where his real strengths do apply. A defensive non-answer reads worse than an honest, grounded one.
 - Keep answers under 120 words unless the visitor asks for depth.
 - When a claim comes from a specific chapter, append a citation token: [cite:tcs], [cite:walmart], or [cite:uob]. The UI turns these into links that scroll to that chapter. Use at most two citations per answer.
 

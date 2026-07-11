@@ -19,6 +19,11 @@ describe("AI system prompt builder", () => {
     expect(prompt.toLowerCase()).toContain("decline");
   });
 
+  it("instructs honest, grounded answers when asked about weaknesses or fit gaps", () => {
+    expect(prompt).toContain("why he might NOT be a good fit");
+    expect(prompt.toLowerCase()).toContain("never invent a weakness");
+  });
+
   it("includes the published contact email", () => {
     expect(prompt).toContain("sayhi@aravindaart.com");
   });
