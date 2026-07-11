@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMode } from "@/lib/mode";
 import { TERMINAL_AI_EVENT } from "@/lib/terminal/events";
+import { COMMAND_PALETTE_OPEN_EVENT } from "@/lib/nav/events";
 
 interface PaletteItem {
   id: string;
@@ -71,6 +72,18 @@ export function CommandPalette() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, close]);
+
+  // Mobile has no ⌘K — the visible nav trigger dispatches this instead.
+  useEffect(() => {
+    const onExternalOpen = () => {
+      setOpen(true);
+      setQuery("");
+      setCursor(0);
+    };
+    window.addEventListener(COMMAND_PALETTE_OPEN_EVENT, onExternalOpen);
+    return () =>
+      window.removeEventListener(COMMAND_PALETTE_OPEN_EVENT, onExternalOpen);
+  }, []);
 
   useEffect(() => {
     if (open) inputRef.current?.focus();

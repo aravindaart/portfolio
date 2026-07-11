@@ -2,6 +2,7 @@
 
 import { ChapterNav } from "@/components/nav/ChapterNav";
 import { CommandPalette } from "@/components/nav/CommandPalette";
+import { MobileNavTrigger } from "@/components/nav/MobileNavTrigger";
 import { ChapterSection } from "@/components/story/ChapterSection";
 import { ContactSection } from "@/components/contact/ContactSection";
 import { FdeThesis } from "@/components/story/FdeThesis";
@@ -24,6 +25,7 @@ export function PortfolioShell({ hasHeadshot }: { hasHeadshot: boolean }) {
         <main>
           <ChapterNav />
           <CommandPalette />
+          <MobileNavTrigger />
           <Hero profile={profile} hasHeadshot={hasHeadshot} />
           {profile.chapters.map((chapter) => (
             <ChapterSection key={chapter.id} chapter={chapter} />
