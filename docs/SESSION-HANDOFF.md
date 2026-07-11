@@ -30,7 +30,7 @@ Resume point for the FDE portfolio build. Read this first when continuing from C
 
 ## Key decisions (approved by Aravindhan)
 
-- AI feature: **Both** — scripted terminal always works; live AI chat activates when `GOOGLE_GENERATIVE_AI_API_KEY` is set (`NEXT_PUBLIC_AI_ENABLED=1` gates the client). Model: `gemini-2.5-flash` via `@ai-sdk/google` direct provider (switched 2026-07-11 from paid Anthropic/AI Gateway — Gemini's free tier hard-rate-limits instead of billing, so a public unauthenticated chat endpoint can't run up a bill). Get a free key at aistudio.google.com.
+- AI feature: **Both** — scripted terminal always works; live AI chat activates when `GOOGLE_GENERATIVE_AI_API_KEY` is set (`NEXT_PUBLIC_AI_ENABLED=1` gates the client). Model: `gemini-3.1-flash-lite` via `@ai-sdk/google` direct provider (switched 2026-07-11 from paid Anthropic/AI Gateway — Gemini's free tier hard-rate-limits instead of billing, so a public unauthenticated chat endpoint can't run up a bill; later same day switched again from `gemini-3.5-flash`, whose free quota on this project turned out to be only 20 requests/day and got exhausted by our own testing — flash-lite gets 1,000/day on the same key, confirmed live, no quality tradeoff for this grounded-Q&A use case). Get a free key at aistudio.google.com.
 - Contact: email `sayhi@aravindaart.com` (routing confirmed), GitHub `aravindaart`, LinkedIn `/in/aravindaart/`.
 - Headshot: photo pending — drop as `public/headshot.jpg`; `Headshot.tsx` auto-swaps from placeholder.
 - Deploy: deferred until build complete; owner has `aravindaart.com`.
