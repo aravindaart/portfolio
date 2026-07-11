@@ -71,7 +71,12 @@ export function Terminal() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          inputRef.current?.focus();
+          // preventScroll: the input sits below several lines of welcome
+          // text, so a plain .focus() triggers the browser's own
+          // scroll-into-view correction on top of the user's own scroll
+          // position — snapping the page further than intended and
+          // leaving only the lower half of the terminal card on screen.
+          inputRef.current?.focus({ preventScroll: true });
           observer.disconnect();
         }
       },

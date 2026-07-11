@@ -92,9 +92,12 @@ export function AiChat({ onExit }: { onExit: () => void }) {
 
   // Opening AI mode is already a deliberate action (typing 'ai', the Hero
   // CTA, ⌘K) — unlike the scripted terminal's passive scroll-into-view,
-  // there's no "stole my focus while scrolling" risk here.
+  // there's no "stole my focus while scrolling" risk here. preventScroll:
+  // the caller already did its own scrollIntoView to reach the terminal —
+  // a plain .focus() here would let the browser layer a second, uncontrolled
+  // scroll-into-view correction on top of that.
   useEffect(() => {
-    inputRef.current?.focus();
+    inputRef.current?.focus({ preventScroll: true });
   }, []);
 
   // Same mobile-keyboard re-settle as the scripted terminal input —
