@@ -21,10 +21,16 @@ export async function POST(request: Request) {
     return Response.json({ error: verdict.error }, { status: verdict.status });
   }
 
-  // Gemini free tier: hard rate-limited by Google, never billed —
-  // safe to expose to unauthenticated public traffic.
+  // Gemini free tier: hard rate-limited by Google, never billed — safe to
+  // expose to unauthenticated public traffic. flash-lite specifically
+  // (not the full flash model) because this project's free-tier quota for
+  // gemini-3.5-flash is only 20 requests/day — exhausted mid-session just
+  // from our own testing. gemini-3.1-flash-lite gets 1,000/day on the
+  // same key (Google's docs), confirmed live, and holds up fine in
+  // quality for grounded single-turn Q&A about a static profile — this
+  // isn't a task that needs the heavier model's reasoning depth.
   const result = streamText({
-    model: google("gemini-3.5-flash"),
+    model: google("gemini-3.1-flash-lite"),
     system: buildSystemPrompt(profile),
     messages: verdict.messages.map((message) => ({
       role: message.role,
