@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { TypingText } from "@/components/effects/TypingText";
 import { Headshot } from "@/components/story/Headshot";
+import { TERMINAL_AI_EVENT } from "@/lib/terminal/events";
 import type { Profile } from "@/lib/types";
 
 const ParticleField = dynamic(
@@ -26,6 +27,16 @@ export function Hero({
   hasHeadshot: boolean;
 }) {
   const [bootStep, setBootStep] = useState(0);
+
+  // Same recipe as the ⌘K "Interview the AI twin" palette action — the
+  // AI twin is the site's main feature but previously only discoverable
+  // by scrolling past 4 chapters to a hidden terminal command.
+  const askAi = () => {
+    document
+      .getElementById("terminal")
+      ?.scrollIntoView({ behavior: "smooth" });
+    window.dispatchEvent(new CustomEvent(TERMINAL_AI_EVENT));
+  };
 
   return (
     <section
@@ -91,6 +102,14 @@ export function Hero({
               </div>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={askAi}
+            className="mt-6 inline-flex items-center gap-2 rounded border border-accent px-4 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent hover:text-bg"
+          >
+            ask the AI twin →
+          </button>
         </div>
       </div>
       <a
