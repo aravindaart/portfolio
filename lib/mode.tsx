@@ -43,7 +43,14 @@ export function ModeProvider({ children }: { children: React.ReactNode }) {
       toggle: () => {
         const next: Mode = mode === "story" ? "recruiter" : "story";
         localStorage.setItem(STORAGE_KEY, next);
-        window.scrollTo({ top: 0 });
+        // behavior: "instant" — html has global scroll-behavior:smooth for
+        // anchor links, which this would otherwise inherit. An animated
+        // scroll racing the DOM swap below (setMode unmounts the current
+        // view and mounts the other) got interrupted/clamped when the swap
+        // shrank the page height (story's long scroll -> recruiter's short
+        // resume), so the animation never reached 0. Instant has no
+        // animation for the swap to race against.
+        window.scrollTo({ top: 0, behavior: "instant" });
         setMode(next);
       },
     }),
