@@ -59,6 +59,28 @@ export function Terminal() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [log, aiActive]);
 
+  // Auto-focus once the terminal scrolls into view, desktop only: mobile
+  // has no cursor-hover intent signal, so focusing on scroll would pop the
+  // keyboard on someone who's just reading, not typing. Fires once — this
+  // isn't a deliberate open-the-panel action like AiChat's mount-focus, so
+  // it shouldn't keep re-stealing focus on every scroll back into view.
+  useEffect(() => {
+    if (isMobileViewport()) return;
+    const el = boxRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          inputRef.current?.focus();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const onAiRequest = () => {
       if (aiEnabled) {

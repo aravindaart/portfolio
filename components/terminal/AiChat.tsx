@@ -84,10 +84,18 @@ export function AiChat({ onExit }: { onExit: () => void }) {
   const [offline, setOffline] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages]);
+
+  // Opening AI mode is already a deliberate action (typing 'ai', the Hero
+  // CTA, ⌘K) — unlike the scripted terminal's passive scroll-into-view,
+  // there's no "stole my focus while scrolling" risk here.
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   // Same mobile-keyboard re-settle as the scripted terminal input —
   // desktop has no keyboard to settle for, so skip it there.
@@ -220,6 +228,7 @@ export function AiChat({ onExit }: { onExit: () => void }) {
 
       <form onSubmit={onSubmit} className="flex border-t border-edge p-3">
         <TerminalCaretInput
+          ref={inputRef}
           value={input}
           onChange={setInput}
           onFocus={onInputFocus}
