@@ -8,8 +8,17 @@ const valid = {
 };
 
 describe("contactGuard", () => {
-  it("accepts a valid submission", () => {
-    const verdict = contactGuard(valid);
+  it("returns 503 email_unavailable when no key is configured", () => {
+    const verdict = contactGuard(undefined, valid);
+    expect(verdict).toEqual({
+      ok: false,
+      status: 503,
+      error: "email_unavailable",
+    });
+  });
+
+  it("accepts a valid submission when a key exists", () => {
+    const verdict = contactGuard("key", valid);
     expect(verdict.ok).toBe(true);
     if (verdict.ok) {
       expect(verdict.data.email).toBe("jane@example.com");
@@ -17,7 +26,7 @@ describe("contactGuard", () => {
   });
 
   it("trims whitespace from fields", () => {
-    const verdict = contactGuard({
+    const verdict = contactGuard("key", {
       ...valid,
       name: "  Jane Recruiter  ",
     });
@@ -28,7 +37,7 @@ describe("contactGuard", () => {
   });
 
   it("rejects an invalid email", () => {
-    const verdict = contactGuard({ ...valid, email: "not-an-email" });
+    const verdict = contactGuard("key", { ...valid, email: "not-an-email" });
     expect(verdict).toEqual({
       ok: false,
       status: 400,
@@ -37,23 +46,23 @@ describe("contactGuard", () => {
   });
 
   it("rejects an empty message", () => {
-    const verdict = contactGuard({ ...valid, message: "" });
+    const verdict = contactGuard("key", { ...valid, message: "" });
     expect(verdict.ok).toBe(false);
   });
 
   it("rejects an oversized message", () => {
-    const verdict = contactGuard({ ...valid, message: "x".repeat(2001) });
+    const verdict = contactGuard("key", { ...valid, message: "x".repeat(2001) });
     expect(verdict.ok).toBe(false);
   });
 
   it("rejects a missing name", () => {
     const { name: _name, ...rest } = valid;
-    const verdict = contactGuard(rest);
+    const verdict = contactGuard("key", rest);
     expect(verdict.ok).toBe(false);
   });
 
   it("rejects non-object bodies", () => {
-    expect(contactGuard(null).ok).toBe(false);
-    expect(contactGuard("hi").ok).toBe(false);
+    expect(contactGuard("key", null).ok).toBe(false);
+    expect(contactGuard("key", "hi").ok).toBe(false);
   });
 });

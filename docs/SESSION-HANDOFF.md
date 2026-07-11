@@ -30,7 +30,7 @@ Resume point for the FDE portfolio build. Read this first when continuing from C
 
 ## Key decisions (approved by Aravindhan)
 
-- AI feature: **Both** — scripted terminal always works; live AI chat activates when `AI_GATEWAY_API_KEY` or `ANTHROPIC_API_KEY` is set (`NEXT_PUBLIC_AI_ENABLED=1` gates the client). Model string: `anthropic/claude-sonnet-5` via AI Gateway.
+- AI feature: **Both** — scripted terminal always works; live AI chat activates when `GOOGLE_GENERATIVE_AI_API_KEY` is set (`NEXT_PUBLIC_AI_ENABLED=1` gates the client). Model: `gemini-2.5-flash` via `@ai-sdk/google` direct provider (switched 2026-07-11 from paid Anthropic/AI Gateway — Gemini's free tier hard-rate-limits instead of billing, so a public unauthenticated chat endpoint can't run up a bill). Get a free key at aistudio.google.com.
 - Contact: email `sayhi@aravindaart.com` (routing confirmed), GitHub `aravindaart`, LinkedIn `/in/aravindaart/`.
 - Headshot: photo pending — drop as `public/headshot.jpg`; `Headshot.tsx` auto-swaps from placeholder.
 - Deploy: deferred until build complete; owner has `aravindaart.com`.
@@ -47,7 +47,7 @@ Resume point for the FDE portfolio build. Read this first when continuing from C
 Build complete (Tasks 1–13), design-reviewed, headshot live. Outstanding items owned by Aravindhan:
 
 1. Deploy (owner has `aravindaart.com`; `metadataBase` already points there). Set `AI_GATEWAY_API_KEY` + `NEXT_PUBLIC_AI_ENABLED=1` to activate the AI twin.
-2. Wire a real form service into `app/api/contact/route.ts` (currently logs server-side and returns `{ok:true}`).
+2. ~~Wire a real form service into `app/api/contact/route.ts`~~ — done (2026-07-11). `/api/contact` now sends via Resend (`lib/contact/format-email.ts`); `contactGuard` returns 503 `email_unavailable` if `RESEND_API_KEY` is unset. Still needs on Aravindhan's side: set `RESEND_API_KEY` in Vercel env, and verify the `aravindaart.com` domain in the Resend dashboard so `CONTACT_FROM_EMAIL` can send from it (defaults to Resend's sandbox `onboarding@resend.dev`, which only reaches the Resend account owner's own address until the domain is verified).
 
 ## Gotchas discovered
 

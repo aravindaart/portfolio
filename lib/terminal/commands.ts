@@ -146,12 +146,50 @@ const suggest = (input: string): string | null => {
   return scored[0] && scored[0].distance <= 2 ? scored[0].name : null;
 };
 
+// This is a command shell, not a chat box — but the terminal invites
+// questions ("ask it"), so a bare "command not found: what" reads as
+// broken rather than as "wrong interface, try 'ai'".
+const QUESTION_WORDS = new Set([
+  "what",
+  "who",
+  "why",
+  "how",
+  "when",
+  "where",
+  "is",
+  "are",
+  "can",
+  "does",
+  "do",
+  "did",
+  "has",
+  "have",
+  "will",
+  "could",
+  "would",
+  "should",
+]);
+
+const looksLikeQuestion = (rawInput: string, tokens: string[]): boolean =>
+  tokens.length > 1 &&
+  (rawInput.trim().endsWith("?") || QUESTION_WORDS.has(tokens[0]));
+
 export function executeCommand(input: string, profile: Profile): CommandResult {
   const tokens = input.trim().toLowerCase().split(/\s+/).filter(Boolean);
   if (tokens.length === 0) return { output: [] };
   const [name, ...args] = tokens;
   const handler = handlers[name];
   if (handler) return handler(args, profile);
+
+  if (looksLikeQuestion(input, tokens)) {
+    return {
+      output: [
+        "this terminal runs commands, not questions.",
+        "type 'ai' to ask the twin directly.",
+      ],
+    };
+  }
+
   const suggestion = suggest(name);
   return {
     output: [

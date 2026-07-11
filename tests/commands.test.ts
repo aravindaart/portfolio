@@ -57,4 +57,21 @@ describe("terminal command engine", () => {
     expect(text).toContain("Detect");
     expect(text).toContain("Harden");
   });
+
+  it("nudges toward 'ai' for a wh-word question instead of 'command not found'", () => {
+    const text = run("what he does?").output.join("\n");
+    expect(text).not.toContain("command not found");
+    expect(text).toContain("ai");
+  });
+
+  it("nudges toward 'ai' for any multi-word input ending in a question mark", () => {
+    const text = run("is he any good?").output.join("\n");
+    expect(text).not.toContain("command not found");
+    expect(text).toContain("ai");
+  });
+
+  it("still reports command not found for a single unknown word", () => {
+    const text = run("what").output.join("\n");
+    expect(text).toContain("command not found: what");
+  });
 });
