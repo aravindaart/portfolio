@@ -206,7 +206,7 @@ export function Terminal() {
                 autoComplete="off"
                 autoCapitalize="off"
                 spellCheck={false}
-                className="w-full appearance-none bg-transparent text-text caret-accent outline-none focus-visible:ring-1 focus-visible:ring-accent"
+                className="w-full appearance-none rounded bg-transparent text-text caret-accent outline-none focus-visible:ring-1 focus-visible:ring-accent/70"
               />
             </div>
           </div>

@@ -226,7 +226,7 @@ export function AiChat({ onExit }: { onExit: () => void }) {
             offline ? "AI offline — type exit" : "ask the AI twin… ('exit' to leave)"
           }
           aria-label="Ask the AI twin a question"
-          className="w-full appearance-none bg-transparent font-mono text-base text-text caret-accent outline-none placeholder:text-dim focus-visible:ring-1 focus-visible:ring-accent sm:text-sm"
+          className="w-full appearance-none rounded bg-transparent font-mono text-base text-text caret-accent outline-none placeholder:text-dim focus-visible:ring-1 focus-visible:ring-accent/70 sm:text-sm"
         />
       </form>
     </div>
