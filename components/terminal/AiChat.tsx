@@ -150,6 +150,22 @@ export function AiChat({ onExit }: { onExit: () => void }) {
         const snapshot = assistant;
         setMessages([...outgoing, { role: "assistant", content: snapshot }]);
       }
+
+      // toTextStreamResponse() commits to a 200 before the upstream model
+      // call resolves — if Gemini fails mid-stream (quota, transient
+      // upstream error), the response is still "ok" but the stream ends
+      // with zero bytes. Without this check the visitor sees a blank
+      // "twin ▸" bubble and no indication anything went wrong.
+      if (!assistant) {
+        setMessages([
+          ...outgoing,
+          {
+            role: "assistant",
+            content:
+              "The AI twin hit an error mid-response — try again, or use the scripted terminal ('incidents', 'experience uob') in the meantime.",
+          },
+        ]);
+      }
     } catch {
       setMessages([
         ...outgoing,

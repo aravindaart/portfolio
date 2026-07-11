@@ -30,6 +30,13 @@ export async function POST(request: Request) {
       role: message.role,
       content: message.content,
     })),
+    // toTextStreamResponse() below has already committed to a 200 by the
+    // time an upstream error (e.g. quota exhaustion) surfaces — errors
+    // land here instead of throwing, so this is the only place a failed
+    // generation gets logged server-side.
+    onError({ error }) {
+      console.error("[chat] streamText error", error);
+    },
   });
 
   return result.toTextStreamResponse();
