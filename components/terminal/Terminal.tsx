@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { executeCommand } from "@/lib/terminal/commands";
 import { TERMINAL_AI_EVENT } from "@/lib/terminal/events";
 import { useMode } from "@/lib/mode";
+import { isMobileViewport } from "@/lib/is-mobile-viewport";
 import { profile } from "@/content/profile";
 
 // The AI SDK client only ships when a visitor actually activates the twin.
@@ -44,7 +45,10 @@ export function Terminal() {
   // Mobile keyboards animate open over ~250-300ms; the browser's native
   // scroll-into-view fires before that finishes and lands in the wrong
   // place. Re-settle once the keyboard (and viewport resize) has caught up.
+  // Desktop has no on-screen keyboard, so this must not fire there — it
+  // was yanking the page out from under desktop visitors on every click.
   const onInputFocus = () => {
+    if (!isMobileViewport()) return;
     window.setTimeout(() => {
       boxRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
     }, 300);

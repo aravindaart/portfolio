@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import type { ChatMessage } from "@/lib/ai/chat-guard";
+import { isMobileViewport } from "@/lib/is-mobile-viewport";
 
 const CITE_PATTERN = /\[cite:([a-z]+)\]/g;
 
@@ -50,8 +51,10 @@ export function AiChat({ onExit }: { onExit: () => void }) {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages]);
 
-  // Same mobile-keyboard re-settle as the scripted terminal input.
+  // Same mobile-keyboard re-settle as the scripted terminal input —
+  // desktop has no keyboard to settle for, so skip it there.
   const onInputFocus = () => {
+    if (!isMobileViewport()) return;
     window.setTimeout(() => {
       rootRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
     }, 300);
