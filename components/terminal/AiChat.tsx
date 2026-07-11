@@ -5,6 +5,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { ChatMessage } from "@/lib/ai/chat-guard";
 import { isMobileViewport } from "@/lib/is-mobile-viewport";
+import { TerminalCaretInput } from "@/components/terminal/TerminalCaretInput";
 
 const CITE_PATTERN = /\[cite:([a-z]+)\]/g;
 const CITE_HREF_PREFIX = "#cite-";
@@ -217,16 +218,16 @@ export function AiChat({ onExit }: { onExit: () => void }) {
         {busy && <p className="font-mono text-xs text-dim">twin is thinking…</p>}
       </div>
 
-      <form onSubmit={onSubmit} className="border-t border-edge p-3">
-        <input
+      <form onSubmit={onSubmit} className="flex border-t border-edge p-3">
+        <TerminalCaretInput
           value={input}
-          onChange={(event) => setInput(event.target.value)}
+          onChange={setInput}
           onFocus={onInputFocus}
           placeholder={
             offline ? "AI offline — type exit" : "ask the AI twin… ('exit' to leave)"
           }
-          aria-label="Ask the AI twin a question"
-          className="w-full appearance-none rounded bg-transparent font-mono text-base text-text caret-accent outline-none placeholder:text-dim focus-visible:ring-1 focus-visible:ring-accent/70 sm:text-sm"
+          ariaLabel="Ask the AI twin a question"
+          textClassName="font-mono text-base sm:text-sm"
         />
       </form>
     </div>

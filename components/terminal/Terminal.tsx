@@ -6,6 +6,7 @@ import { executeCommand } from "@/lib/terminal/commands";
 import { TERMINAL_AI_EVENT } from "@/lib/terminal/events";
 import { useMode } from "@/lib/mode";
 import { isMobileViewport } from "@/lib/is-mobile-viewport";
+import { TerminalCaretInput } from "@/components/terminal/TerminalCaretInput";
 import { profile } from "@/content/profile";
 
 // The AI SDK client only ships when a visitor actually activates the twin.
@@ -196,17 +197,14 @@ export function Terminal() {
             ))}
             <div className="flex items-center gap-2 text-base sm:text-sm">
               <span className="shrink-0 text-accent">{PROMPT}</span>
-              <input
+              <TerminalCaretInput
                 ref={inputRef}
                 value={input}
-                onChange={(event) => setInput(event.target.value)}
+                onChange={setInput}
                 onKeyDown={onKeyDown}
                 onFocus={onInputFocus}
-                aria-label="Terminal command input"
-                autoComplete="off"
-                autoCapitalize="off"
-                spellCheck={false}
-                className="w-full appearance-none rounded bg-transparent text-text caret-accent outline-none focus-visible:ring-1 focus-visible:ring-accent/70"
+                ariaLabel="Terminal command input"
+                textClassName="text-base sm:text-sm"
               />
             </div>
           </div>
