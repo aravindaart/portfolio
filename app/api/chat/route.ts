@@ -1,14 +1,24 @@
 import { google } from "@ai-sdk/google";
 import { convertToModelMessages, stepCountIs, streamText } from "ai";
 import { chatGuard } from "@/lib/ai/chat-guard";
+import { checkChatRateLimit } from "@/lib/ai/chat-rate-limit";
 import { buildAgentTools } from "@/lib/ai/tools";
 import { buildSystemPrompt } from "@/lib/ai/system-prompt";
+import { getClientIp } from "@/lib/contact/rate-limit";
 import { profile } from "@/content/profile";
 
 export const maxDuration = 30;
 
 export async function POST(request: Request) {
   const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+
+  // Per-IP limits run before anything touches the model: this endpoint is
+  // unauthenticated, so it's the only thing standing between a scripted
+  // visitor and the shared daily Gemini quota.
+  const rate = await checkChatRateLimit(getClientIp(request));
+  if (!rate.ok) {
+    return Response.json({ error: rate.error }, { status: rate.status });
+  }
 
   let body: unknown;
   try {
@@ -37,6 +47,9 @@ export async function POST(request: Request) {
     // Each tool round-trip is a step; 4 allows lookup → answer with margin
     // while bounding worst-case free-tier quota burn per request.
     stopWhen: stepCountIs(4),
+    // Profile answers fit comfortably; a cap keeps an injected "write me an
+    // essay" from streaming unbounded output on the shared quota.
+    maxOutputTokens: 700,
     onError({ error }) {
       console.error("[chat] streamText error", error);
     },

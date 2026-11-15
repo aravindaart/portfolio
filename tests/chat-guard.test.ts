@@ -28,8 +28,8 @@ describe("chatGuard", () => {
     expect(verdict).toEqual({ ok: false, status: 400, error: "invalid_input" });
   });
 
-  it("rejects more than 30 messages with 400", () => {
-    const messages = Array.from({ length: 31 }, () =>
+  it("rejects more than 20 messages with 400", () => {
+    const messages = Array.from({ length: 21 }, () =>
       textMessage("user", "hi"),
     );
     const verdict = chatGuard("key", { messages });

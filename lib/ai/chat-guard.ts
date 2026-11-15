@@ -24,8 +24,11 @@ const messageSchema = z.looseObject({
   parts: z.array(partSchema).min(1).max(24),
 });
 
+// 20 messages ≈ 10 visitor turns per request — plenty for a portfolio chat,
+// and a hard ceiling on how much re-sent history each request can bill
+// against the shared quota.
 const bodySchema = z.looseObject({
-  messages: z.array(messageSchema).min(1).max(30),
+  messages: z.array(messageSchema).min(1).max(20),
 });
 
 export type ChatGuardVerdict =

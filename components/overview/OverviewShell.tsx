@@ -32,18 +32,14 @@ export function OverviewShell() {
       {/* Flat editorial nav */}
       <header className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-paper/90 backdrop-blur-sm">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <a
-            href="#top"
-            className="flex items-center gap-2 font-ui-mono text-xs tracking-[0.18em] uppercase"
-          >
-            {/* Brand mark: the forward chevrons */}
-            <span
-              aria-hidden
-              className="flex h-5 w-5 items-center justify-center rounded-[3px] bg-brand pb-0.5 font-bold text-paper"
-            >
-              »
+          <a href="#top" className="flex items-baseline gap-3">
+            {/* Typographic monogram: serif Am with a cobalt full stop */}
+            <span aria-hidden className="font-display text-2xl leading-none italic">
+              Am<span className="text-brand">.</span>
             </span>
-            {profile.identity.name}
+            <span className="hidden font-ui-mono text-[11px] tracking-[0.18em] uppercase sm:inline">
+              {profile.identity.name}
+            </span>
           </a>
           <nav className="hidden items-center gap-7 font-ui-mono text-[11px] tracking-[0.15em] text-ink2 uppercase sm:flex">
             {NAV_LINKS.map((link) => (

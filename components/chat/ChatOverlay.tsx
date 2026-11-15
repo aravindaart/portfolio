@@ -45,7 +45,14 @@ export function ChatOverlay() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { messages, sendMessage, status, error } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+      // The server rejects >20 messages; long conversations keep working by
+      // sending only the recent window (the agent re-reads tools anyway).
+      prepareSendMessagesRequest: ({ messages: outgoing, ...rest }) => ({
+        body: { ...rest, messages: outgoing.slice(-20) },
+      }),
+    }),
   });
 
   const busy = status === "submitted" || status === "streaming";
@@ -110,13 +117,10 @@ export function ChatOverlay() {
     >
       {/* Title bar */}
       <header className="flex h-12 shrink-0 items-center justify-between border-b border-cc-edge bg-cc-panel px-4">
-        <div className="flex items-center gap-3">
-          {/* Brand mark */}
-          <span
-            aria-hidden
-            className="flex h-5 w-5 items-center justify-center rounded-[3px] bg-brand pb-0.5 font-ui-mono font-bold text-paper"
-          >
-            »
+        <div className="flex items-baseline gap-3">
+          {/* Typographic monogram */}
+          <span aria-hidden className="font-display text-xl leading-none text-cc-text italic">
+            Am<span className="text-brand2">.</span>
           </span>
           <p className="font-ui-mono text-xs text-cc-dim">
             aravindhan · fde session
@@ -207,8 +211,8 @@ export function ChatOverlay() {
               )}
               {error && (
                 <p className="font-ui-mono text-xs text-warn">
-                  ⚠ session error — the free-tier quota may be exhausted. Try
-                  again shortly, or email sayhi@aravindaart.com.
+                  ⚠ session paused — rate limit or quota reached. Try again in
+                  a minute, or email sayhi@aravindaart.com.
                 </p>
               )}
             </div>
