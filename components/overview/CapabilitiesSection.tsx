@@ -9,87 +9,91 @@ const scrollToChapter = (id: string) => {
 
 export function CapabilitiesSection({ profile }: { profile: Profile }) {
   return (
-    <section id="capabilities" className="scroll-mt-16 px-6 py-20 sm:py-28">
-      <div className="mx-auto max-w-5xl">
+    <section id="capabilities" className="scroll-mt-16 px-5 py-16 sm:px-8 sm:py-24">
+      <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-center text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
-            The FDE competency map
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-center text-base leading-relaxed text-ink2">
-            Every claim links to the chapter that proves it — the same
-            grounding rule the agent answers under.
-          </p>
+          <div className="flex flex-wrap items-end justify-between gap-4 pb-8">
+            <h2 className="font-display text-4xl text-ink sm:text-6xl">
+              Claims, <em className="text-coral">with receipts.</em>
+            </h2>
+            <p className="font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
+              03 — Capabilities
+            </p>
+          </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {profile.fdeCompetencies.map((item, index) => (
-            <Reveal key={item.competency} delay={(index % 3) * 0.06}>
+        {/* Competency ledger */}
+        <Reveal>
+          <div>
+            {profile.fdeCompetencies.map((item) => (
               <button
+                key={item.competency}
                 type="button"
                 onClick={() => scrollToChapter(item.chapterId)}
-                className="h-full w-full rounded-2xl border border-hairline bg-card p-6 text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-18px_rgba(28,25,23,0.3)]"
+                className="group grid w-full gap-1 border-t border-hairline py-4 text-left transition-colors last:border-b hover:bg-card sm:grid-cols-12 sm:gap-6"
               >
-                <p className="text-sm font-semibold text-ink">
+                <p className="text-sm font-medium text-ink sm:col-span-4">
                   {item.competency}
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-ink2">
+                <p className="text-sm leading-relaxed text-ink2 sm:col-span-6">
                   {item.evidence}
                 </p>
-                <p className="mt-4 text-xs font-medium text-coral">
-                  See the proof →
+                <p className="font-ui-mono text-xs text-coral opacity-70 group-hover:opacity-100 sm:col-span-2 sm:text-right">
+                  proof: {item.chapterId} ↗
                 </p>
               </button>
-            </Reveal>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Reveal>
 
-        <Reveal>
-          <div className="mt-16 grid gap-10 border-t border-hairline pt-14 lg:grid-cols-2">
+        <div className="mt-16 grid gap-12 md:grid-cols-2">
+          <Reveal>
             <div>
-              <h3 className="text-xl font-semibold text-ink">Stack</h3>
-              <div className="mt-5 space-y-5">
+              <p className="border-b border-ink pb-3 font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
+                Stack
+              </p>
+              <dl className="mt-1">
                 {profile.skills.map((group) => (
-                  <div key={group.group}>
-                    <p className="text-xs font-medium tracking-widest text-ink2 uppercase">
+                  <div
+                    key={group.group}
+                    className="grid gap-1 border-b border-hairline py-3.5 sm:grid-cols-[9rem_1fr] sm:gap-4"
+                  >
+                    <dt className="font-ui-mono text-xs text-coral uppercase">
                       {group.group}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {group.items.map((item) => (
-                        <span
-                          key={item}
-                          className="rounded-full border border-hairline bg-card px-3 py-1 text-xs text-ink/80"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
+                    </dt>
+                    <dd className="text-sm leading-relaxed text-ink/80">
+                      {group.items.join(" · ")}
+                    </dd>
                   </div>
                 ))}
-              </div>
+              </dl>
             </div>
+          </Reveal>
+
+          <Reveal delay={0.08}>
             <div>
-              <h3 className="text-xl font-semibold text-ink">
+              <p className="border-b border-ink pb-3 font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
                 Certifications
-              </h3>
-              <ul className="mt-5 space-y-3">
+              </p>
+              <ul className="mt-1">
                 {profile.certifications.map((cert) => (
                   <li
                     key={cert.name}
-                    className="flex items-baseline justify-between gap-4 border-b border-hairline pb-3 text-sm"
+                    className="flex items-baseline justify-between gap-4 border-b border-hairline py-3.5 text-sm"
                   >
                     <span className="text-ink/85">
                       {cert.name}
                       <span className="text-ink2"> — {cert.issuer}</span>
                     </span>
-                    <span className="shrink-0 text-xs text-ink2">
+                    <span className="shrink-0 font-ui-mono text-xs text-ink2">
                       {cert.year}
                     </span>
                   </li>
                 ))}
               </ul>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

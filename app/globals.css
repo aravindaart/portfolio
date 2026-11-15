@@ -12,14 +12,14 @@
   --color-text: #d7e2ea;
   --color-dim: #7b8a96;
 
-  /* Overview (Apple-clean, warm light) */
-  --color-paper: #faf9f7;
-  --color-card: #ffffff;
-  --color-ink: #1c1917;
-  --color-ink2: #78716c;
-  --color-hairline: #e7e3de;
-  --color-coral: #c6613f;
-  --color-coral2: #d97757;
+  /* Overview (matte editorial: greige paper, ink, flat rust) */
+  --color-paper: #efece5;
+  --color-card: #f6f3ec;
+  --color-ink: #181511;
+  --color-ink2: #6f6a5e;
+  --color-hairline: #d6d0c2;
+  --color-coral: #a4502c;
+  --color-coral2: #c67f52;
 
   /* Claude-Code-style chat overlay (warm dark) */
   --color-cc-bg: #1f1e1b;
@@ -32,6 +32,7 @@
   --font-sans: var(--font-geist);
   --font-mono: var(--font-jetbrains);
   --font-ui-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument);
 }
 
 html {
@@ -68,14 +69,6 @@ button:disabled,
   color: var(--color-bg);
 }
 
-/* Subtle background grid */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, rgb(103 232 249 / 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(103 232 249 / 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
 /* Terminal caret blink */
 @keyframes caret-blink {
   0%, 49% { opacity: 1; }
@@ -97,13 +90,23 @@ button:disabled,
   .caret { animation: none; }
 }
 
-/* Status-bar live indicator */
-@keyframes live-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+/* Amber-phosphor TTY (terminal view). Overriding the dark-theme vars here
+   recolors every token-based utility inside — including the shared caret
+   input — without forking those components. */
+.tty {
+  --color-text: #ffb45e;
+  --color-dim: #a1743d;
+  --color-accent: #ffb45e;
+  background: #0d0b07;
+  color: var(--color-text);
+  text-shadow: 0 0 6px rgb(255 180 94 / 0.3);
 }
-.live-dot {
-  animation: live-pulse 2s ease-in-out infinite;
+.tty .tty-dim {
+  color: var(--color-dim);
+}
+.tty ::selection {
+  background: #ffb45e;
+  color: #0d0b07;
 }
 
 /* "thinking…" shimmer for in-flight agent work */
@@ -116,7 +119,6 @@ button:disabled,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .live-dot,
   .thinking {
     animation: none;
   }

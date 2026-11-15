@@ -29,13 +29,13 @@ export function OverviewShell() {
 
   return (
     <div className="min-h-screen bg-paper text-ink">
-      {/* Sticky translucent nav */}
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-hairline/70 bg-paper/80 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-          <a href="#top" className="text-sm font-semibold tracking-tight">
+      {/* Flat editorial nav */}
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-paper/90 backdrop-blur-sm">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 sm:px-8">
+          <a href="#top" className="font-ui-mono text-xs tracking-[0.18em] uppercase">
             {profile.identity.name}
           </a>
-          <nav className="hidden items-center gap-7 text-sm text-ink2 sm:flex">
+          <nav className="hidden items-center gap-7 font-ui-mono text-[11px] tracking-[0.15em] text-ink2 uppercase sm:flex">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
@@ -49,7 +49,7 @@ export function OverviewShell() {
           <button
             type="button"
             onClick={() => openChat()}
-            className="rounded-full bg-coral px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-coral2"
+            className="rounded-sm bg-ink px-4 py-1.5 text-xs font-medium text-paper transition-opacity hover:opacity-80"
           >
             Ask my agent
           </button>
@@ -59,16 +59,18 @@ export function OverviewShell() {
       <main id="top">
         <OverviewHero profile={profile} />
 
-        {/* Stats strip */}
-        <section className="border-y border-hairline bg-card px-6 py-12">
+        {/* Figures row */}
+        <section className="px-5 pt-16 sm:px-8 sm:pt-24">
           <Reveal>
-            <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 text-center lg:grid-cols-4">
+            <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px border border-hairline bg-hairline lg:grid-cols-4">
               {STATS.map((stat) => (
-                <div key={stat.label}>
-                  <p className="text-4xl font-semibold tracking-tight text-ink">
+                <div key={stat.label} className="bg-paper p-5 sm:p-6">
+                  <p className="font-ui-mono text-3xl text-ink sm:text-4xl">
                     {stat.value}
                   </p>
-                  <p className="mt-1.5 text-xs text-ink2">{stat.label}</p>
+                  <p className="mt-2 text-xs leading-relaxed text-ink2">
+                    {stat.label}
+                  </p>
                 </div>
               ))}
             </div>
@@ -81,16 +83,15 @@ export function OverviewShell() {
         <OverviewContact profile={profile} />
       </main>
 
-      <footer className="border-t border-hairline px-6 py-10 pb-24">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 text-xs text-ink2">
+      <footer className="border-t border-ink px-5 py-8 pb-24 sm:px-8">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 font-ui-mono text-[11px] tracking-[0.15em] text-ink2 uppercase">
           <p>
-            © {new Date().getFullYear()} {profile.identity.name} · Built with
-            Next.js and a real agent.
+            © {new Date().getFullYear()} {profile.identity.name}
           </p>
           <button
             type="button"
             onClick={() => openChat()}
-            className="font-medium text-coral transition-colors hover:text-coral2"
+            className="text-coral transition-colors hover:text-ink"
           >
             Ask my agent anything →
           </button>

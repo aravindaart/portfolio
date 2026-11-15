@@ -84,8 +84,7 @@ export interface Harness {
 export type CommandAction =
   | { type: "clear" }
   | { type: "ai" }
-  | { type: "recruiter" }
-  | { type: "scroll"; target: string };
+  | { type: "mode"; mode: "overview" | "recruiter" };
 
 export interface CommandResult {
   output: string[];

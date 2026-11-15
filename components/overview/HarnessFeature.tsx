@@ -5,8 +5,7 @@ import { Reveal } from "@/components/story/Reveal";
 import { useChatOverlay } from "@/lib/chat-overlay";
 
 /**
- * The dark full-bleed feature section — the Apple "product moment" of the
- * page, telling the story of the agent harness built inside the bank.
+ * The matte-dark feature section: the agent harness built inside the bank.
  */
 export function HarnessFeature({ harness }: { harness: Harness }) {
   const { openChat } = useChatOverlay();
@@ -14,103 +13,96 @@ export function HarnessFeature({ harness }: { harness: Harness }) {
   return (
     <section
       id="harness"
-      className="scroll-mt-16 bg-cc-bg px-6 py-20 text-cc-text sm:py-28"
+      className="scroll-mt-16 bg-ink px-5 py-16 text-paper sm:px-8 sm:py-24"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         <Reveal>
-          <p className="text-center text-sm font-medium tracking-widest text-coral2 uppercase">
-            Built, not just used
-          </p>
-          <h2 className="mt-4 text-center text-3xl font-semibold tracking-tight sm:text-5xl">
-            No model API? He built
-            <br />
-            the harness anyway.
-          </h2>
-          <div className="mx-auto mt-6 max-w-2xl space-y-4 text-center text-base leading-relaxed text-cc-dim">
-            {harness.problem.map((paragraph) => (
-              <p key={paragraph.slice(0, 40)}>{paragraph}</p>
-            ))}
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-paper/25 pb-8">
+            <h2 className="font-display max-w-3xl text-4xl leading-tight sm:text-6xl">
+              No model API?
+              <br />
+              <em className="text-coral2">He built the harness anyway.</em>
+            </h2>
+            <p className="font-ui-mono text-[11px] tracking-[0.18em] text-paper/50 uppercase">
+              02 — The harness
+            </p>
           </div>
         </Reveal>
 
-        {/* Pipeline */}
+        <Reveal delay={0.08}>
+          <div className="mt-10 grid gap-10 md:grid-cols-12">
+            <div className="space-y-4 text-base leading-relaxed text-paper/75 md:col-span-5">
+              {harness.problem.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+              ))}
+              <button
+                type="button"
+                onClick={() =>
+                  openChat("Tell me about the agent harness he built")
+                }
+                className="mt-2 rounded-sm border border-paper/60 px-5 py-3 text-sm font-medium text-paper transition-colors hover:bg-paper hover:text-ink"
+              >
+                Ask the agent about it
+              </button>
+            </div>
+
+            {/* The loop, as a numbered log */}
+            <ol className="md:col-span-7">
+              {harness.pipeline.map((step, index) => (
+                <li
+                  key={step.label}
+                  className="grid gap-1 border-t border-paper/20 py-4 first:border-t-0 first:pt-0 sm:grid-cols-[6rem_1fr] sm:gap-6"
+                >
+                  <p className="font-ui-mono text-xs text-coral2">
+                    {String(index + 1).padStart(2, "0")} /{" "}
+                    <span className="uppercase">{step.label}</span>
+                  </p>
+                  <p className="text-sm leading-relaxed text-paper/70">
+                    {step.detail}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Reveal>
+
         <Reveal delay={0.1}>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-cc-edge bg-cc-edge sm:grid-cols-5">
-            {harness.pipeline.map((step, index) => (
-              <div key={step.label} className="bg-cc-panel p-5">
-                <p className="font-ui-mono text-[11px] text-coral2">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <p className="mt-2 text-sm font-semibold capitalize">
-                  {step.label}
-                </p>
-                <p className="mt-2 text-xs leading-relaxed text-cc-dim">
-                  {step.detail}
+          <div className="mt-12 grid gap-px border border-paper/25 bg-paper/25 sm:grid-cols-2 lg:grid-cols-4">
+            {harness.tools.map((tool) => (
+              <div key={tool.name} className="bg-ink p-4">
+                <p className="font-ui-mono text-sm text-coral2">{tool.name}</p>
+                <p className="mt-1.5 text-xs leading-relaxed text-paper/60">
+                  {tool.description}
                 </p>
               </div>
             ))}
-          </div>
-        </Reveal>
-
-        {/* Tool protocol + guardrails */}
-        <div className="mt-10 grid gap-6 lg:grid-cols-5">
-          <Reveal className="lg:col-span-3">
-            <div className="h-full rounded-3xl border border-cc-edge bg-cc-panel p-6 sm:p-8">
-              <p className="text-sm font-semibold">
-                The model speaks a fixed tool protocol
-              </p>
-              <p className="mt-1 text-xs text-cc-dim">
-                A reply that doesn&apos;t parse as one of these is rejected —
-                never executed.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {harness.tools.map((tool) => (
-                  <span
-                    key={tool.name}
-                    title={tool.description}
-                    className="rounded-lg border border-cc-edge bg-cc-raise px-3 py-1.5 font-ui-mono text-xs text-cc-text/90"
-                  >
-                    {tool.name}
-                  </span>
-                ))}
-              </div>
-              <ul className="mt-6 space-y-2 text-xs leading-relaxed text-cc-dim">
+            <div className="bg-ink p-4">
+              <p className="font-ui-mono text-sm text-paper/80">guardrails</p>
+              <ul className="mt-1.5 space-y-1.5 text-xs leading-relaxed text-paper/60">
                 {harness.guardrails.map((rail) => (
-                  <li key={rail.slice(0, 30)} className="flex gap-2">
-                    <span aria-hidden className="shrink-0 text-coral2">
-                      ▪
-                    </span>
-                    <span>{rail}</span>
-                  </li>
+                  <li key={rail.slice(0, 30)}>— {rail}</li>
                 ))}
               </ul>
             </div>
-          </Reveal>
-          <Reveal delay={0.08} className="lg:col-span-2">
-            <div className="flex h-full flex-col rounded-3xl border border-cc-edge bg-cc-panel p-6 sm:p-8">
-              <p className="text-sm font-semibold">
-                {harness.extension.headline}
-              </p>
-              <div className="mt-3 space-y-3 text-xs leading-relaxed text-cc-dim">
-                {harness.extension.detail.map((paragraph) => (
-                  <p key={paragraph.slice(0, 30)}>{paragraph}</p>
-                ))}
-              </div>
-              <button
-                type="button"
-                onClick={() => openChat("Tell me about the agent harness he built")}
-                className="mt-auto pt-6 text-left text-sm font-medium text-coral2 transition-colors hover:text-coral"
-              >
-                Ask the agent about the harness →
-              </button>
-            </div>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
 
-        <p className="mt-8 text-center font-ui-mono text-[11px] text-cc-dim">
-          Internal system, built and run inside a bank — no public repo. He&apos;ll
-          walk through the architecture live.
-        </p>
+        <Reveal delay={0.12}>
+          <div className="mt-10 grid gap-6 md:grid-cols-12">
+            <p className="font-ui-mono text-[11px] tracking-[0.18em] text-paper/50 uppercase md:col-span-5">
+              {harness.extension.headline}
+            </p>
+            <div className="space-y-3 text-sm leading-relaxed text-paper/70 md:col-span-7">
+              {harness.extension.detail.map((paragraph) => (
+                <p key={paragraph.slice(0, 30)}>{paragraph}</p>
+              ))}
+              <p className="pt-2 font-ui-mono text-[11px] text-paper/45">
+                Internal system, built and run inside a bank — no public repo.
+                He&apos;ll walk through the architecture live.
+              </p>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

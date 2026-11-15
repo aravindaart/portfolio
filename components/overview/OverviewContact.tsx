@@ -7,9 +7,9 @@ import { Reveal } from "@/components/story/Reveal";
 type SendState = "idle" | "sending" | "sent" | "error" | "rate-limited";
 
 const inputClass =
-  "w-full rounded-xl border border-hairline bg-card px-4 py-3 text-base text-ink outline-none transition-colors focus:border-coral sm:text-sm";
+  "w-full border-0 border-b border-hairline bg-transparent px-0 py-3 text-base text-ink outline-none transition-colors focus:border-ink sm:text-sm";
 
-/** Light-themed contact section; same /api/contact flow as the terminal view. */
+/** Editorial contact section; same /api/contact flow as before. */
 export function OverviewContact({ profile }: { profile: Profile }) {
   const [copied, setCopied] = useState(false);
   const [sendState, setSendState] = useState<SendState>("idle");
@@ -58,39 +58,45 @@ export function OverviewContact({ profile }: { profile: Profile }) {
   };
 
   return (
-    <section id="contact" className="scroll-mt-16 px-6 py-20 sm:py-28">
-      <div className="mx-auto max-w-5xl">
+    <section id="contact" className="scroll-mt-16 px-5 py-16 sm:px-8 sm:py-24">
+      <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-center text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
-            The next chapter starts
-            <br /> with a message.
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-center text-base leading-relaxed text-ink2">
-            Based in {profile.identity.location} · open to relocation and
-            remote · forward-deployed and client-facing roles.
-          </p>
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ink pb-8">
+            <h2 className="font-display text-4xl text-ink sm:text-6xl">
+              The next chapter starts
+              <br />
+              <em className="text-coral">with a message.</em>
+            </h2>
+            <p className="font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
+              04 — Contact
+            </p>
+          </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-2">
-          <Reveal>
-            <div className="space-y-5">
+        <div className="mt-10 grid gap-12 md:grid-cols-12">
+          <Reveal className="md:col-span-5">
+            <div className="space-y-6">
+              <p className="max-w-sm text-base leading-relaxed text-ink/80">
+                Based in {profile.identity.location} · open to relocation and
+                remote · forward-deployed and client-facing roles.
+              </p>
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
                   onClick={copyEmail}
-                  className="rounded-full bg-ink px-5 py-3 text-sm font-medium text-paper transition-opacity hover:opacity-85"
+                  className="rounded-sm bg-ink px-5 py-3 text-sm font-medium text-paper transition-opacity hover:opacity-80"
                 >
                   {copied ? "Copied ✓" : "Copy email"}
                 </button>
                 <button
                   type="button"
                   onClick={openMail}
-                  className="rounded-full border border-hairline bg-card px-5 py-3 text-sm font-medium text-ink transition-colors hover:border-coral"
+                  className="rounded-sm border border-ink px-5 py-3 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-paper"
                 >
                   Open mail app
                 </button>
               </div>
-              <ul className="space-y-2 text-sm">
+              <ul className="space-y-2 font-ui-mono text-xs">
                 <li>
                   <a
                     href={profile.contact.github}
@@ -115,35 +121,37 @@ export function OverviewContact({ profile }: { profile: Profile }) {
             </div>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <form onSubmit={submit} className="space-y-4">
+          <Reveal delay={0.08} className="md:col-span-7">
+            <form onSubmit={submit} className="space-y-6">
+              <div className="grid gap-6 sm:grid-cols-2">
+                <label className="block">
+                  <span className="font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
+                    Name
+                  </span>
+                  <input
+                    name="name"
+                    required
+                    maxLength={100}
+                    autoComplete="name"
+                    className={inputClass}
+                  />
+                </label>
+                <label className="block">
+                  <span className="font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
+                    Email
+                  </span>
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    maxLength={200}
+                    autoComplete="email"
+                    className={inputClass}
+                  />
+                </label>
+              </div>
               <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-ink2">
-                  Name
-                </span>
-                <input
-                  name="name"
-                  required
-                  maxLength={100}
-                  autoComplete="name"
-                  className={inputClass}
-                />
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-ink2">
-                  Email
-                </span>
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  maxLength={200}
-                  autoComplete="email"
-                  className={inputClass}
-                />
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-ink2">
+                <span className="font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
                   Message
                 </span>
                 <textarea
@@ -154,11 +162,11 @@ export function OverviewContact({ profile }: { profile: Profile }) {
                   className={inputClass}
                 />
               </label>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <button
                   type="submit"
                   disabled={sendState === "sending"}
-                  className="rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-coral2 disabled:opacity-50"
+                  className="rounded-sm bg-coral px-6 py-3 text-sm font-semibold text-paper transition-opacity hover:opacity-85 disabled:opacity-50"
                 >
                   {sendState === "sending" ? "Sending…" : "Send message"}
                 </button>

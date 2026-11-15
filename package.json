@@ -13,8 +13,6 @@
   "dependencies": {
     "@ai-sdk/google": "^3.0.91",
     "@ai-sdk/react": "^3.0.224",
-    "@react-three/drei": "^10.7.9",
-    "@react-three/fiber": "^9.8.2",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.0",
     "ai": "^6.0.222",
@@ -25,7 +23,6 @@
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "resend": "^6.17.2",
-    "three": "^0.187.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

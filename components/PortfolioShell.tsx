@@ -1,9 +1,9 @@
 "use client";
 
-import { AgentShell } from "@/components/agent/AgentShell";
 import { ChatOverlay } from "@/components/chat/ChatOverlay";
 import { OverviewShell } from "@/components/overview/OverviewShell";
 import { RecruiterView } from "@/components/recruiter/RecruiterView";
+import { Tty } from "@/components/terminal/Tty";
 import { ViewSwitcher } from "@/components/nav/ViewSwitcher";
 import { ChatOverlayProvider } from "@/lib/chat-overlay";
 import { useMode } from "@/lib/mode";
@@ -18,7 +18,7 @@ export function PortfolioShell() {
       {mode === "recruiter" ? (
         <RecruiterView profile={profile} />
       ) : mode === "terminal" ? (
-        <AgentShell />
+        <Tty />
       ) : (
         <OverviewShell />
       )}
