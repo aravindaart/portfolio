@@ -53,11 +53,38 @@ export interface Profile {
   lookingFor: string[];
 }
 
+export interface HarnessTool {
+  /** Tool identifier as the harness protocol names it, e.g. "read_files" */
+  name: string;
+  /** Short human description of what the executor does for this tool */
+  description: string;
+}
+
+export interface HarnessPipelineStep {
+  label: string;
+  detail: string;
+}
+
+export interface Harness {
+  name: string;
+  tagline: string;
+  /** The constraint that forced the design */
+  problem: string[];
+  /** How it works, in order */
+  pipeline: HarnessPipelineStep[];
+  /** The structured tool vocabulary the LLM must answer with */
+  tools: HarnessTool[];
+  guardrails: string[];
+  extension: {
+    headline: string;
+    detail: string[];
+  };
+}
+
 export type CommandAction =
   | { type: "clear" }
   | { type: "ai" }
-  | { type: "recruiter" }
-  | { type: "scroll"; target: string };
+  | { type: "mode"; mode: "overview" | "recruiter" };
 
 export interface CommandResult {
   output: string[];

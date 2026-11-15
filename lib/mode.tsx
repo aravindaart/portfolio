@@ -13,45 +13,40 @@ const STORAGE_KEY = "portfolio-mode";
 
 interface ModeContextValue {
   mode: Mode;
-  toggle: () => void;
+  setMode: (next: Mode) => void;
 }
 
 const ModeContext = createContext<ModeContextValue>({
-  mode: "story",
-  toggle: () => {},
+  mode: "overview",
+  setMode: () => {},
 });
 
 export function ModeProvider({ children }: { children: React.ReactNode }) {
-  // Server renders story mode; the effect resolves the visitor's real
+  // Server renders the overview; the effect resolves the visitor's real
   // preference after hydration to avoid SSR/localStorage mismatches.
-  const [mode, setMode] = useState<Mode>("story");
+  const [mode, setModeState] = useState<Mode>("overview");
 
   useEffect(() => {
     const param = new URLSearchParams(window.location.search).get("mode");
-    setMode(resolveInitialMode(param, localStorage.getItem(STORAGE_KEY)));
+    setModeState(resolveInitialMode(param, localStorage.getItem(STORAGE_KEY)));
   }, []);
 
   const value = useMemo<ModeContextValue>(
     () => ({
       mode,
-      // Story and Recruiter Mode are different documents, not a scroll
-      // position on the same one — keeping the old scrollY after a swap
-      // can land the visitor on blank space or an unrelated section of
-      // the new (much shorter) layout. Only the explicit toggle resets
-      // scroll; the initial mode resolution below must not, or it would
+      // The three views are different documents, not scroll positions on the
+      // same one — keeping the old scrollY after a swap can land the visitor
+      // on blank space of a much shorter layout. Only the explicit switch
+      // resets scroll; the initial resolution above must not, or it would
       // fight a deep link's anchor scroll on first load.
-      toggle: () => {
-        const next: Mode = mode === "story" ? "recruiter" : "story";
+      setMode: (next: Mode) => {
+        if (next === mode) return;
         localStorage.setItem(STORAGE_KEY, next);
         // behavior: "instant" — html has global scroll-behavior:smooth for
-        // anchor links, which this would otherwise inherit. An animated
-        // scroll racing the DOM swap below (setMode unmounts the current
-        // view and mounts the other) got interrupted/clamped when the swap
-        // shrank the page height (story's long scroll -> recruiter's short
-        // resume), so the animation never reached 0. Instant has no
-        // animation for the swap to race against.
+        // anchor links; an animated scroll racing the DOM swap gets clamped
+        // when the page height shrinks mid-animation.
         window.scrollTo({ top: 0, behavior: "instant" });
-        setMode(next);
+        setModeState(next);
       },
     }),
     [mode],

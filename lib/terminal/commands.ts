@@ -1,4 +1,5 @@
 import type { CommandResult, Profile } from "@/lib/types";
+import { harness } from "@/content/harness";
 
 type CommandHandler = (args: string[], profile: Profile) => CommandResult;
 
@@ -24,10 +25,10 @@ const chapterSummary = (profile: Profile, id: string): string[] => {
   const chapter = profile.chapters.find((c) => c.id === id);
   if (!chapter) return [`unknown company '${id}' — try: tcs, walmart, uob`];
   const metrics =
-    chapter.metrics?.map((m) => `  ▸ ${m.value}${m.suffix} ${m.label}`) ?? [];
+    chapter.metrics?.map((m) => `  > ${m.value}${m.suffix} ${m.label}`) ?? [];
   return [
     `${chapter.company} — ${chapter.role} (${chapter.period})`,
-    ...chapter.highlights.map((h) => `  • ${h}`),
+    ...chapter.highlights.map((h) => `  * ${h}`),
     ...metrics,
   ];
 };
@@ -39,14 +40,15 @@ const handlers: Record<string, CommandHandler> = {
       "  help          this list",
       "  whoami        who is this person",
       "  experience    career history (try: experience walmart)",
+      "  harness       the agent harness he built inside a bank",
       "  skills        technical skill groups",
       "  incidents     the UOB OTP-abuse incident timeline",
       "  certs         certifications",
-      "  contact       how to reach Aravindhan",
+      "  contact       how to reach aravindhan",
       "  looking-for   what role he wants next",
-      "  open <id>     jump to a section (tcs | walmart | uob | contact)",
-      "  recruiter     toggle Recruiter Mode",
-      "  ai            talk to the AI twin",
+      "  ai            open a live agent session (full screen)",
+      "  overview      switch to the clean site",
+      "  resume        switch to the printable resume",
       "  clear         clear the terminal",
     ],
   }),
@@ -77,6 +79,21 @@ const handlers: Record<string, CommandHandler> = {
     };
   },
 
+  harness: () => ({
+    output: [
+      `${harness.name} — built where no model API existed`,
+      harness.tagline,
+      "",
+      "tool protocol:",
+      ...harness.tools.map((t) => `  ${t.name.padEnd(18)}${t.description}`),
+      "",
+      "guardrails:",
+      ...harness.guardrails.map((rail) => `  * ${rail}`),
+      "",
+      "ask the live agent for the full story: type 'ai'",
+    ],
+  }),
+
   skills: (_args, profile) => ({
     output: profile.skills.map(
       (group) => `${group.group}: ${group.items.join(", ")}`,
@@ -91,7 +108,7 @@ const handlers: Record<string, CommandHandler> = {
         ...(uob?.timeline?.map(
           (step) => `  ${step.phase} — ${step.title}`,
         ) ?? []),
-        "type 'open uob' to read the full story",
+        "type 'experience uob' for the full chapter",
       ],
     };
   },
@@ -111,26 +128,27 @@ const handlers: Record<string, CommandHandler> = {
   }),
 
   "looking-for": (_args, profile) => ({
-    output: profile.lookingFor.map((line) => `• ${line}`),
-  }),
-
-  open: (args) => {
-    const target = args[0];
-    const valid = ["tcs", "walmart", "uob", "contact", "thesis"];
-    if (!target || !valid.includes(target)) {
-      return { output: [`usage: open <${valid.join(" | ")}>`] };
-    }
-    return { output: [`navigating to #${target}…`], action: { type: "scroll", target } };
-  },
-
-  recruiter: () => ({
-    output: ["toggling Recruiter Mode…"],
-    action: { type: "recruiter" },
+    output: profile.lookingFor.map((line) => `* ${line}`),
   }),
 
   ai: () => ({
-    output: ["handing off to the AI twin…"],
+    output: ["opening live agent session…"],
     action: { type: "ai" },
+  }),
+
+  overview: () => ({
+    output: ["switching to overview…"],
+    action: { type: "mode", mode: "overview" },
+  }),
+
+  resume: () => ({
+    output: ["switching to the printable resume…"],
+    action: { type: "mode", mode: "recruiter" },
+  }),
+
+  exit: () => ({
+    output: ["logout", "switching to overview…"],
+    action: { type: "mode", mode: "overview" },
   }),
 
   clear: () => ({ output: [], action: { type: "clear" } }),
@@ -147,8 +165,8 @@ const suggest = (input: string): string | null => {
 };
 
 // This is a command shell, not a chat box — but the terminal invites
-// questions ("ask it"), so a bare "command not found: what" reads as
-// broken rather than as "wrong interface, try 'ai'".
+// questions, so a bare "command not found: what" reads as broken rather
+// than as "wrong interface, try 'ai'".
 const QUESTION_WORDS = new Set([
   "what",
   "who",
@@ -185,7 +203,7 @@ export function executeCommand(input: string, profile: Profile): CommandResult {
     return {
       output: [
         "this terminal runs commands, not questions.",
-        "type 'ai' to ask the twin directly.",
+        "type 'ai' to ask the live agent directly.",
       ],
     };
   }

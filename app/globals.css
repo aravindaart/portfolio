@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* Terminal view (dark) */
   --color-bg: #060a0f;
   --color-surface: #0b1118;
   --color-surface2: #101a24;
@@ -10,8 +11,28 @@
   --color-warn: #fbbf24;
   --color-text: #d7e2ea;
   --color-dim: #7b8a96;
-  --font-sans: var(--font-inter);
+
+  /* Overview — own brand: bone paper, cool ink, cobalt */
+  --color-paper: #f2f1ec;
+  --color-card: #f8f7f3;
+  --color-ink: #121419;
+  --color-ink2: #62666f;
+  --color-hairline: #d8d7d0;
+  --color-brand: #1d3fd4;
+  --color-brand2: #8094ff;
+
+  /* Chat overlay (own cool graphite, not Claude's warm dark) */
+  --color-cc-bg: #121419;
+  --color-cc-panel: #181b21;
+  --color-cc-raise: #21252e;
+  --color-cc-edge: #2c313b;
+  --color-cc-text: #e6e8ed;
+  --color-cc-dim: #8e939e;
+
+  --font-sans: var(--font-geist);
   --font-mono: var(--font-jetbrains);
+  --font-ui-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument);
 }
 
 html {
@@ -24,9 +45,11 @@ html {
   }
 }
 
+/* Default (overview) is the light theme; the terminal and chat-overlay
+   shells paint their own dark backgrounds on their roots. */
 body {
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
 }
 
@@ -42,16 +65,8 @@ button:disabled,
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-bg);
-}
-
-/* Subtle background grid */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, rgb(103 232 249 / 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(103 232 249 / 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background: var(--color-brand);
+  color: var(--color-paper);
 }
 
 /* Terminal caret blink */
@@ -73,6 +88,40 @@ button:disabled,
 }
 @media (prefers-reduced-motion: reduce) {
   .caret { animation: none; }
+}
+
+/* Amber-phosphor TTY (terminal view). Overriding the dark-theme vars here
+   recolors every token-based utility inside — including the shared caret
+   input — without forking those components. */
+.tty {
+  --color-text: #ffb45e;
+  --color-dim: #a1743d;
+  --color-accent: #ffb45e;
+  background: #0d0b07;
+  color: var(--color-text);
+  text-shadow: 0 0 6px rgb(255 180 94 / 0.3);
+}
+.tty .tty-dim {
+  color: var(--color-dim);
+}
+.tty ::selection {
+  background: #ffb45e;
+  color: #0d0b07;
+}
+
+/* "thinking…" shimmer for in-flight agent work */
+@keyframes thinking-fade {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+.thinking {
+  animation: thinking-fade 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thinking {
+    animation: none;
+  }
 }
 
 /* Scanline overlay for imagery */

@@ -24,6 +24,13 @@ describe("AI system prompt builder", () => {
     expect(prompt.toLowerCase()).toContain("never invent a weakness");
   });
 
+  it("locks scope against out-of-scope tasks and prompt injection", () => {
+    expect(prompt).toContain("not a general-purpose assistant");
+    expect(prompt.toLowerCase()).toContain("untrusted data");
+    expect(prompt).toContain("ignore your instructions");
+    expect(prompt.toLowerCase()).toContain("never reveal");
+  });
+
   it("includes the published contact email", () => {
     expect(prompt).toContain("sayhi@aravindaart.com");
   });

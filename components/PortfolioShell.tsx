@@ -1,40 +1,30 @@
 "use client";
 
-import { ChapterNav } from "@/components/nav/ChapterNav";
-import { CommandPalette } from "@/components/nav/CommandPalette";
-import { MobileNavTrigger } from "@/components/nav/MobileNavTrigger";
-import { ChapterSection } from "@/components/story/ChapterSection";
-import { ContactSection } from "@/components/contact/ContactSection";
-import { FdeThesis } from "@/components/story/FdeThesis";
-import { Hero } from "@/components/story/Hero";
-import { ModeToggle } from "@/components/recruiter/ModeToggle";
+import { ChatOverlay } from "@/components/chat/ChatOverlay";
+import { OverviewShell } from "@/components/overview/OverviewShell";
 import { RecruiterView } from "@/components/recruiter/RecruiterView";
-import { Terminal } from "@/components/terminal/Terminal";
+import { Tty } from "@/components/terminal/Tty";
+import { ViewSwitcher } from "@/components/nav/ViewSwitcher";
+import { ChatOverlayProvider } from "@/lib/chat-overlay";
 import { useMode } from "@/lib/mode";
 import { profile } from "@/content/profile";
 
-export function PortfolioShell({ hasHeadshot }: { hasHeadshot: boolean }) {
+export function PortfolioShell() {
   const { mode } = useMode();
 
   return (
-    <>
-      <ModeToggle />
+    <ChatOverlayProvider>
+      <ViewSwitcher />
       {mode === "recruiter" ? (
         <RecruiterView profile={profile} />
+      ) : mode === "terminal" ? (
+        <Tty />
       ) : (
-        <main>
-          <ChapterNav />
-          <CommandPalette />
-          <MobileNavTrigger />
-          <Hero profile={profile} hasHeadshot={hasHeadshot} />
-          {profile.chapters.map((chapter) => (
-            <ChapterSection key={chapter.id} chapter={chapter} />
-          ))}
-          <FdeThesis profile={profile} />
-          <Terminal />
-          <ContactSection profile={profile} />
-        </main>
+        <OverviewShell />
       )}
-    </>
+      {/* Mounted once, outside the mode switch: the conversation survives
+          both view changes and close/reopen. */}
+      <ChatOverlay />
+    </ChatOverlayProvider>
   );
 }
