@@ -75,6 +75,31 @@ button:disabled,
   .caret { animation: none; }
 }
 
+/* Status-bar live indicator */
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-dot {
+  animation: live-pulse 2s ease-in-out infinite;
+}
+
+/* "thinking…" shimmer for in-flight agent work */
+@keyframes thinking-fade {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+.thinking {
+  animation: thinking-fade 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot,
+  .thinking {
+    animation: none;
+  }
+}
+
 /* Scanline overlay for imagery */
 .scanlines::after {
   content: "";

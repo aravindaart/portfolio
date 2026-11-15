@@ -1,6 +1,7 @@
 import { google } from "@ai-sdk/google";
-import { streamText } from "ai";
+import { convertToModelMessages, stepCountIs, streamText } from "ai";
 import { chatGuard } from "@/lib/ai/chat-guard";
+import { buildAgentTools } from "@/lib/ai/tools";
 import { buildSystemPrompt } from "@/lib/ai/system-prompt";
 import { profile } from "@/content/profile";
 
@@ -27,23 +28,24 @@ export async function POST(request: Request) {
   // gemini-3.5-flash is only 20 requests/day — exhausted mid-session just
   // from our own testing. gemini-3.1-flash-lite gets 1,000/day on the
   // same key (Google's docs), confirmed live, and holds up fine in
-  // quality for grounded single-turn Q&A about a static profile — this
-  // isn't a task that needs the heavier model's reasoning depth.
+  // quality for grounded tool-calling Q&A about a static profile.
   const result = streamText({
     model: google("gemini-3.1-flash-lite"),
     system: buildSystemPrompt(profile),
-    messages: verdict.messages.map((message) => ({
-      role: message.role,
-      content: message.content,
-    })),
-    // toTextStreamResponse() below has already committed to a 200 by the
-    // time an upstream error (e.g. quota exhaustion) surfaces — errors
-    // land here instead of throwing, so this is the only place a failed
-    // generation gets logged server-side.
+    messages: await convertToModelMessages(verdict.messages),
+    tools: buildAgentTools(profile),
+    // Each tool round-trip is a step; 4 allows lookup → answer with margin
+    // while bounding worst-case free-tier quota burn per request.
+    stopWhen: stepCountIs(4),
     onError({ error }) {
       console.error("[chat] streamText error", error);
     },
   });
 
-  return result.toTextStreamResponse();
+  // UI message stream (not a plain text stream): tool calls, inputs, and
+  // results arrive as typed parts so the client can render them as a real
+  // harness transcript.
+  return result.toUIMessageStreamResponse({
+    onError: () => "upstream_error",
+  });
 }

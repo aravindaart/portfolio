@@ -1,40 +1,18 @@
 "use client";
 
-import { ChapterNav } from "@/components/nav/ChapterNav";
-import { CommandPalette } from "@/components/nav/CommandPalette";
-import { MobileNavTrigger } from "@/components/nav/MobileNavTrigger";
-import { ChapterSection } from "@/components/story/ChapterSection";
-import { ContactSection } from "@/components/contact/ContactSection";
-import { FdeThesis } from "@/components/story/FdeThesis";
-import { Hero } from "@/components/story/Hero";
+import { AgentShell } from "@/components/agent/AgentShell";
 import { ModeToggle } from "@/components/recruiter/ModeToggle";
 import { RecruiterView } from "@/components/recruiter/RecruiterView";
-import { Terminal } from "@/components/terminal/Terminal";
 import { useMode } from "@/lib/mode";
 import { profile } from "@/content/profile";
 
-export function PortfolioShell({ hasHeadshot }: { hasHeadshot: boolean }) {
+export function PortfolioShell() {
   const { mode } = useMode();
 
   return (
     <>
       <ModeToggle />
-      {mode === "recruiter" ? (
-        <RecruiterView profile={profile} />
-      ) : (
-        <main>
-          <ChapterNav />
-          <CommandPalette />
-          <MobileNavTrigger />
-          <Hero profile={profile} hasHeadshot={hasHeadshot} />
-          {profile.chapters.map((chapter) => (
-            <ChapterSection key={chapter.id} chapter={chapter} />
-          ))}
-          <FdeThesis profile={profile} />
-          <Terminal />
-          <ContactSection profile={profile} />
-        </main>
-      )}
+      {mode === "recruiter" ? <RecruiterView profile={profile} /> : <AgentShell />}
     </>
   );
 }

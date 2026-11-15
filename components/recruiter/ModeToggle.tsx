@@ -17,7 +17,7 @@ export function ModeToggle() {
         aria-hidden
         className={`h-2 w-2 rounded-full ${recruiting ? "bg-accent" : "bg-dim"}`}
       />
-      {recruiting ? "Story Mode" : "Recruiter Mode"}
+      {recruiting ? "Agent Mode" : "Recruiter Mode"}
     </button>
   );
 }

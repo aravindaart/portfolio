@@ -1,18 +1,35 @@
+import type { UIMessage } from "ai";
 import { z } from "zod";
 
-const messageSchema = z.object({
+// The useChat transport sends full UIMessages (text parts + tool parts from
+// earlier turns). Text parts are strictly capped; tool parts are structurally
+// validated but stay open-shaped — the server re-executes tools itself and
+// never trusts client-supplied tool output for anything but model context.
+const textPartSchema = z.looseObject({
+  type: z.literal("text"),
+  text: z.string().min(1).max(4000),
+});
+
+const otherPartSchema = z
+  .looseObject({ type: z.string().min(1).max(64) })
+  .refine((part) => part.type !== "text");
+
+const partSchema = z.union([textPartSchema, otherPartSchema]);
+
+// 'system' is deliberately absent: the system prompt is server-owned and a
+// client-injected system message must never reach the model.
+const messageSchema = z.looseObject({
+  id: z.string().min(1).max(128),
   role: z.enum(["user", "assistant"]),
-  content: z.string().min(1).max(1000),
+  parts: z.array(partSchema).min(1).max(24),
 });
 
-const bodySchema = z.object({
-  messages: z.array(messageSchema).min(1).max(20),
+const bodySchema = z.looseObject({
+  messages: z.array(messageSchema).min(1).max(30),
 });
-
-export type ChatMessage = z.infer<typeof messageSchema>;
 
 export type ChatGuardVerdict =
-  | { ok: true; messages: ChatMessage[] }
+  | { ok: true; messages: UIMessage[] }
   | { ok: false; status: 400 | 503; error: "invalid_input" | "ai_unavailable" };
 
 /** Pure request guard for the chat route: key presence + input validation. */
@@ -27,5 +44,5 @@ export function chatGuard(
   if (!parsed.success) {
     return { ok: false, status: 400, error: "invalid_input" };
   }
-  return { ok: true, messages: parsed.data.messages };
+  return { ok: true, messages: parsed.data.messages as unknown as UIMessage[] };
 }
