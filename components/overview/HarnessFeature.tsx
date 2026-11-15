@@ -21,7 +21,7 @@ export function HarnessFeature({ harness }: { harness: Harness }) {
             <h2 className="font-display max-w-3xl text-4xl leading-tight sm:text-6xl">
               No model API?
               <br />
-              <em className="text-coral2">He built the harness anyway.</em>
+              <em className="text-brand2">He built the harness anyway.</em>
             </h2>
             <p className="font-ui-mono text-[11px] tracking-[0.18em] text-paper/50 uppercase">
               02 — The harness
@@ -53,7 +53,7 @@ export function HarnessFeature({ harness }: { harness: Harness }) {
                   key={step.label}
                   className="grid gap-1 border-t border-paper/20 py-4 first:border-t-0 first:pt-0 sm:grid-cols-[6rem_1fr] sm:gap-6"
                 >
-                  <p className="font-ui-mono text-xs text-coral2">
+                  <p className="font-ui-mono text-xs text-brand2">
                     {String(index + 1).padStart(2, "0")} /{" "}
                     <span className="uppercase">{step.label}</span>
                   </p>
@@ -70,7 +70,7 @@ export function HarnessFeature({ harness }: { harness: Harness }) {
           <div className="mt-12 grid gap-px border border-paper/25 bg-paper/25 sm:grid-cols-2 lg:grid-cols-4">
             {harness.tools.map((tool) => (
               <div key={tool.name} className="bg-ink p-4">
-                <p className="font-ui-mono text-sm text-coral2">{tool.name}</p>
+                <p className="font-ui-mono text-sm text-brand2">{tool.name}</p>
                 <p className="mt-1.5 text-xs leading-relaxed text-paper/60">
                   {tool.description}
                 </p>

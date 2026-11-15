@@ -111,16 +111,13 @@ export function ChatOverlay() {
       {/* Title bar */}
       <header className="flex h-12 shrink-0 items-center justify-between border-b border-cc-edge bg-cc-panel px-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={closeChat}
-              aria-label="Close chat"
-              className="h-3 w-3 rounded-full bg-[#ff5f57] transition-transform hover:scale-110"
-            />
-            <span aria-hidden className="h-3 w-3 rounded-full bg-cc-edge" />
-            <span aria-hidden className="h-3 w-3 rounded-full bg-cc-edge" />
-          </div>
+          {/* Brand mark */}
+          <span
+            aria-hidden
+            className="flex h-5 w-5 items-center justify-center rounded-[3px] bg-brand pb-0.5 font-ui-mono font-bold text-paper"
+          >
+            »
+          </span>
           <p className="font-ui-mono text-xs text-cc-dim">
             aravindhan · fde session
           </p>
@@ -132,7 +129,7 @@ export function ChatOverlay() {
           <button
             type="button"
             onClick={closeChat}
-            className="rounded-md border border-cc-edge px-2.5 py-1 font-ui-mono text-xs text-cc-dim transition-colors hover:border-coral2 hover:text-coral2"
+            className="rounded-md border border-cc-edge px-2.5 py-1 font-ui-mono text-xs text-cc-dim transition-colors hover:border-brand2 hover:text-brand2"
           >
             esc ✕
           </button>
@@ -154,7 +151,7 @@ export function ChatOverlay() {
                 onClick={() => send(session.question)}
                 className="block w-full truncate rounded-lg px-2 py-2 text-left font-ui-mono text-xs text-cc-text/80 transition-colors hover:bg-cc-raise disabled:opacity-50"
               >
-                <span aria-hidden className="mr-1.5 text-coral2">▸</span>
+                <span aria-hidden className="mr-1.5 text-brand2">▸</span>
                 {session.label}
               </button>
             ))}
@@ -186,7 +183,7 @@ export function ChatOverlay() {
                         key={session.id}
                         type="button"
                         onClick={() => send(session.question)}
-                        className="rounded-xl border border-cc-edge bg-cc-panel px-4 py-3 text-left text-sm text-cc-text/85 transition-colors hover:border-coral2/60"
+                        className="rounded-xl border border-cc-edge bg-cc-panel px-4 py-3 text-left text-sm text-cc-text/85 transition-colors hover:border-brand2/60"
                       >
                         {session.question}
                       </button>
@@ -224,7 +221,7 @@ export function ChatOverlay() {
                 event.preventDefault();
                 send(input);
               }}
-              className="mx-auto flex w-full max-w-2xl items-center gap-2 rounded-2xl border border-cc-edge bg-cc-panel px-4 py-2 focus-within:border-coral2/60"
+              className="mx-auto flex w-full max-w-2xl items-center gap-2 rounded-2xl border border-cc-edge bg-cc-panel px-4 py-2 focus-within:border-brand2/60"
             >
               <input
                 ref={inputRef}
@@ -239,7 +236,7 @@ export function ChatOverlay() {
                 type="submit"
                 disabled={busy || !input.trim()}
                 aria-label="Send"
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-coral2 text-cc-bg transition-opacity disabled:opacity-40"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand2 text-cc-bg transition-opacity disabled:opacity-40"
               >
                 ↑
               </button>

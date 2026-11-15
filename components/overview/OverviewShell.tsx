@@ -32,7 +32,17 @@ export function OverviewShell() {
       {/* Flat editorial nav */}
       <header className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-paper/90 backdrop-blur-sm">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <a href="#top" className="font-ui-mono text-xs tracking-[0.18em] uppercase">
+          <a
+            href="#top"
+            className="flex items-center gap-2 font-ui-mono text-xs tracking-[0.18em] uppercase"
+          >
+            {/* Brand mark: the forward chevrons */}
+            <span
+              aria-hidden
+              className="flex h-5 w-5 items-center justify-center rounded-[3px] bg-brand pb-0.5 font-bold text-paper"
+            >
+              »
+            </span>
             {profile.identity.name}
           </a>
           <nav className="hidden items-center gap-7 font-ui-mono text-[11px] tracking-[0.15em] text-ink2 uppercase sm:flex">
@@ -91,7 +101,7 @@ export function OverviewShell() {
           <button
             type="button"
             onClick={() => openChat()}
-            className="text-coral transition-colors hover:text-ink"
+            className="text-brand transition-colors hover:text-ink"
           >
             Ask my agent anything →
           </button>

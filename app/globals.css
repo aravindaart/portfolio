@@ -12,22 +12,22 @@
   --color-text: #d7e2ea;
   --color-dim: #7b8a96;
 
-  /* Overview (matte editorial: greige paper, ink, flat rust) */
-  --color-paper: #efece5;
-  --color-card: #f6f3ec;
-  --color-ink: #181511;
-  --color-ink2: #6f6a5e;
-  --color-hairline: #d6d0c2;
-  --color-coral: #a4502c;
-  --color-coral2: #c67f52;
+  /* Overview — own brand: bone paper, cool ink, cobalt */
+  --color-paper: #f2f1ec;
+  --color-card: #f8f7f3;
+  --color-ink: #121419;
+  --color-ink2: #62666f;
+  --color-hairline: #d8d7d0;
+  --color-brand: #1d3fd4;
+  --color-brand2: #8094ff;
 
-  /* Claude-Code-style chat overlay (warm dark) */
-  --color-cc-bg: #1f1e1b;
-  --color-cc-panel: #262521;
-  --color-cc-raise: #2e2d28;
-  --color-cc-edge: #3b3a34;
-  --color-cc-text: #e8e6e1;
-  --color-cc-dim: #a09d94;
+  /* Chat overlay (own cool graphite, not Claude's warm dark) */
+  --color-cc-bg: #121419;
+  --color-cc-panel: #181b21;
+  --color-cc-raise: #21252e;
+  --color-cc-edge: #2c313b;
+  --color-cc-text: #e6e8ed;
+  --color-cc-dim: #8e939e;
 
   --font-sans: var(--font-geist);
   --font-mono: var(--font-jetbrains);
@@ -65,8 +65,8 @@ button:disabled,
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-bg);
+  background: var(--color-brand);
+  color: var(--color-paper);
 }
 
 /* Terminal caret blink */

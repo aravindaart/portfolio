@@ -65,7 +65,7 @@ export function OverviewContact({ profile }: { profile: Profile }) {
             <h2 className="font-display text-4xl text-ink sm:text-6xl">
               The next chapter starts
               <br />
-              <em className="text-coral">with a message.</em>
+              <em className="text-brand">with a message.</em>
             </h2>
             <p className="font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
               04 — Contact
@@ -102,7 +102,7 @@ export function OverviewContact({ profile }: { profile: Profile }) {
                     href={profile.contact.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-ink2 transition-colors hover:text-coral"
+                    className="text-ink2 transition-colors hover:text-brand"
                   >
                     github.com/aravindaart ↗
                   </a>
@@ -112,7 +112,7 @@ export function OverviewContact({ profile }: { profile: Profile }) {
                     href={profile.contact.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-ink2 transition-colors hover:text-coral"
+                    className="text-ink2 transition-colors hover:text-brand"
                   >
                     linkedin.com/in/aravindaart ↗
                   </a>
@@ -166,7 +166,7 @@ export function OverviewContact({ profile }: { profile: Profile }) {
                 <button
                   type="submit"
                   disabled={sendState === "sending"}
-                  className="rounded-sm bg-coral px-6 py-3 text-sm font-semibold text-paper transition-opacity hover:opacity-85 disabled:opacity-50"
+                  className="rounded-sm bg-brand px-6 py-3 text-sm font-semibold text-paper transition-opacity hover:opacity-85 disabled:opacity-50"
                 >
                   {sendState === "sending" ? "Sending…" : "Send message"}
                 </button>

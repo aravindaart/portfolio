@@ -12,7 +12,7 @@ function ChapterRow({ chapter }: { chapter: Chapter }) {
       >
         {/* Meta column */}
         <div className="md:col-span-4">
-          <p className="font-ui-mono text-[11px] tracking-[0.18em] text-coral uppercase">
+          <p className="font-ui-mono text-[11px] tracking-[0.18em] text-brand uppercase">
             {String(chapter.index).padStart(2, "0")} — {chapter.company}
           </p>
           <p className="mt-2 text-sm font-medium text-ink">{chapter.role}</p>
@@ -52,7 +52,7 @@ function ChapterRow({ chapter }: { chapter: Chapter }) {
                 key={highlight.slice(0, 40)}
                 className="flex gap-3 text-sm leading-relaxed text-ink/75"
               >
-                <span aria-hidden className="shrink-0 text-coral">
+                <span aria-hidden className="shrink-0 text-brand">
                   —
                 </span>
                 <span>{highlight}</span>
@@ -71,7 +71,7 @@ function ChapterRow({ chapter }: { chapter: Chapter }) {
                     key={step.phase}
                     className="grid gap-1 border-t border-hairline pt-3 first:border-t-0 first:pt-0 sm:grid-cols-[7.5rem_1fr] sm:gap-4"
                   >
-                    <p className="font-ui-mono text-xs text-coral">
+                    <p className="font-ui-mono text-xs text-brand">
                       {step.phase}
                     </p>
                     <div>
@@ -100,7 +100,7 @@ export function ExperienceSection({ profile }: { profile: Profile }) {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 pb-8">
             <h2 className="font-display text-4xl text-ink sm:text-6xl">
-              Three chapters, <em className="text-coral">one job description.</em>
+              Three chapters, <em className="text-brand">one job description.</em>
             </h2>
             <p className="font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
               01 — Experience

@@ -30,7 +30,7 @@ export function OverviewHero({ profile }: { profile: Profile }) {
           <h1 className="font-display mt-10 text-[17vw] leading-[0.95] tracking-tight text-ink sm:text-8xl md:text-9xl">
             Forward-deployed
             <br />
-            <em className="text-coral">before it had a name.</em>
+            <em className="text-brand">before it had a name.</em>
           </h1>
         </Reveal>
 
@@ -69,7 +69,7 @@ export function OverviewHero({ profile }: { profile: Profile }) {
                 type="button"
                 onClick={() => openChat(PREVIEW.question)}
                 aria-label="Open the live agent chat"
-                className="group block w-full rounded-sm border border-ink bg-cc-bg p-5 text-left transition-colors hover:border-coral sm:p-6"
+                className="group block w-full rounded-sm border border-ink bg-cc-bg p-5 text-left transition-colors hover:border-brand sm:p-6"
               >
                 <p className="font-ui-mono text-[10px] tracking-[0.18em] text-cc-dim uppercase">
                   Live session — it really answers
@@ -78,7 +78,7 @@ export function OverviewHero({ profile }: { profile: Profile }) {
                   {PREVIEW.question}
                 </p>
                 <p className="mt-3 font-ui-mono text-xs text-cc-dim">
-                  <span className="text-coral2">⏺</span>{" "}
+                  <span className="text-brand2">⏺</span>{" "}
                   <span className="text-cc-text">{PREVIEW.tool}</span>
                 </p>
                 <p className="mt-1 pl-4 font-ui-mono text-xs text-cc-dim">
@@ -87,7 +87,7 @@ export function OverviewHero({ profile }: { profile: Profile }) {
                 <p className="mt-3 text-sm leading-relaxed text-cc-text/85">
                   {PREVIEW.answer}
                 </p>
-                <p className="mt-4 font-ui-mono text-[11px] text-coral2 opacity-70 transition-opacity group-hover:opacity-100">
+                <p className="mt-4 font-ui-mono text-[11px] text-brand2 opacity-70 transition-opacity group-hover:opacity-100">
                   ▶ open session
                 </p>
               </button>

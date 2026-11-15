@@ -32,7 +32,7 @@ const buildMarkdownComponents = (onCite: CiteHandler): Components => ({
         <button
           type="button"
           onClick={() => onCite(id)}
-          className="mx-1 rounded border border-coral2/50 px-1.5 py-0.5 font-ui-mono text-[10px] text-coral2 hover:bg-coral2/10"
+          className="mx-1 rounded border border-brand2/50 px-1.5 py-0.5 font-ui-mono text-[10px] text-brand2 hover:bg-brand2/10"
         >
           {children}
         </button>
@@ -43,7 +43,7 @@ const buildMarkdownComponents = (onCite: CiteHandler): Components => ({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-coral2 underline decoration-dotted underline-offset-2"
+        className="text-brand2 underline decoration-dotted underline-offset-2"
       >
         {children}
       </a>
@@ -90,7 +90,7 @@ function ToolCallView({ part }: { part: ToolUIPart }) {
       <p className="flex items-baseline gap-2">
         <span
           aria-hidden
-          className={part.state === "output-error" ? "text-warn" : "text-coral2"}
+          className={part.state === "output-error" ? "text-warn" : "text-brand2"}
         >
           ⏺
         </span>
@@ -113,7 +113,7 @@ function ToolCallView({ part }: { part: ToolUIPart }) {
             <button
               type="button"
               onClick={() => setOpen((current) => !current)}
-              className="text-left hover:text-coral2"
+              className="text-left hover:text-brand2"
             >
               <span aria-hidden className="mr-2 text-cc-edge">⎿</span>
               done {open ? "▾ hide result" : "▸ view result"}

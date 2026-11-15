@@ -14,7 +14,7 @@ export function CapabilitiesSection({ profile }: { profile: Profile }) {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 pb-8">
             <h2 className="font-display text-4xl text-ink sm:text-6xl">
-              Claims, <em className="text-coral">with receipts.</em>
+              Claims, <em className="text-brand">with receipts.</em>
             </h2>
             <p className="font-ui-mono text-[11px] tracking-[0.18em] text-ink2 uppercase">
               03 — Capabilities
@@ -38,7 +38,7 @@ export function CapabilitiesSection({ profile }: { profile: Profile }) {
                 <p className="text-sm leading-relaxed text-ink2 sm:col-span-6">
                   {item.evidence}
                 </p>
-                <p className="font-ui-mono text-xs text-coral opacity-70 group-hover:opacity-100 sm:col-span-2 sm:text-right">
+                <p className="font-ui-mono text-xs text-brand opacity-70 group-hover:opacity-100 sm:col-span-2 sm:text-right">
                   proof: {item.chapterId} ↗
                 </p>
               </button>
@@ -58,7 +58,7 @@ export function CapabilitiesSection({ profile }: { profile: Profile }) {
                     key={group.group}
                     className="grid gap-1 border-b border-hairline py-3.5 sm:grid-cols-[9rem_1fr] sm:gap-4"
                   >
-                    <dt className="font-ui-mono text-xs text-coral uppercase">
+                    <dt className="font-ui-mono text-xs text-brand uppercase">
                       {group.group}
                     </dt>
                     <dd className="text-sm leading-relaxed text-ink/80">

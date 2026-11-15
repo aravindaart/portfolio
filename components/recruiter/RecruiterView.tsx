@@ -23,7 +23,7 @@ export function RecruiterView({ profile }: { profile: Profile }) {
         <p className="mt-1 text-dim print:text-neutral-700">
           {profile.identity.title} · {profile.identity.location}
         </p>
-        <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-sm text-accent print:text-neutral-700">
+        <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-sm text-brand2 print:text-neutral-700">
           <a
             href={`mailto:${profile.contact.email}`}
             className="hover:underline print:text-neutral-700"
@@ -56,14 +56,14 @@ export function RecruiterView({ profile }: { profile: Profile }) {
         <button
           type="button"
           onClick={() => window.print()}
-          className="no-print mt-4 rounded border border-accent px-4 py-2 font-mono text-sm text-accent transition-colors hover:bg-accent hover:text-bg"
+          className="no-print mt-4 rounded border border-brand2 px-4 py-2 font-mono text-sm text-brand2 transition-colors hover:bg-brand2 hover:text-bg"
         >
           ↓ Download PDF resume
         </button>
       </header>
 
       <section className="mt-8">
-        <h2 className="font-mono text-sm tracking-widest text-accent2 uppercase print:text-neutral-600">
+        <h2 className="font-mono text-sm tracking-widest text-brand22 uppercase print:text-neutral-600">
           Summary
         </h2>
         <div className="mt-3 space-y-2">
@@ -79,7 +79,7 @@ export function RecruiterView({ profile }: { profile: Profile }) {
       </section>
 
       <section className="mt-8">
-        <h2 className="font-mono text-sm tracking-widest text-accent2 uppercase print:text-neutral-600">
+        <h2 className="font-mono text-sm tracking-widest text-brand22 uppercase print:text-neutral-600">
           Experience
         </h2>
         {[...profile.chapters].reverse().map((chapter) => (
@@ -116,7 +116,7 @@ export function RecruiterView({ profile }: { profile: Profile }) {
       </section>
 
       <section className="mt-8">
-        <h2 className="font-mono text-sm tracking-widest text-accent2 uppercase print:text-neutral-600">
+        <h2 className="font-mono text-sm tracking-widest text-brand22 uppercase print:text-neutral-600">
           Skills
         </h2>
         <div className="mt-3 space-y-1">
@@ -133,7 +133,7 @@ export function RecruiterView({ profile }: { profile: Profile }) {
       </section>
 
       <section className="mt-8">
-        <h2 className="font-mono text-sm tracking-widest text-accent2 uppercase print:text-neutral-600">
+        <h2 className="font-mono text-sm tracking-widest text-brand22 uppercase print:text-neutral-600">
           Certifications
         </h2>
         <ul className="mt-3 space-y-1">
@@ -146,7 +146,7 @@ export function RecruiterView({ profile }: { profile: Profile }) {
       </section>
 
       <section className="mt-8">
-        <h2 className="font-mono text-sm tracking-widest text-accent2 uppercase print:text-neutral-600">
+        <h2 className="font-mono text-sm tracking-widest text-brand22 uppercase print:text-neutral-600">
           Looking for
         </h2>
         <ul className="mt-3 list-disc space-y-1 pl-5">
