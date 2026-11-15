@@ -15,6 +15,11 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Dev-only (ignored in production builds): Next 16 blocks cross-origin
+  // requests to dev assets, so opening the dev server from another device
+  // via LAN IP loads bare HTML with no JS/CSS — a blank-looking page.
+  // Allow the private subnet for phone/tablet testing.
+  allowedDevOrigins: ["192.168.18.41", "192.168.*"],
   // Don't advertise the framework in responses.
   poweredByHeader: false,
   async headers() {
