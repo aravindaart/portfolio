@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* Terminal view (dark) */
   --color-bg: #060a0f;
   --color-surface: #0b1118;
   --color-surface2: #101a24;
@@ -10,8 +11,27 @@
   --color-warn: #fbbf24;
   --color-text: #d7e2ea;
   --color-dim: #7b8a96;
-  --font-sans: var(--font-inter);
+
+  /* Overview (Apple-clean, warm light) */
+  --color-paper: #faf9f7;
+  --color-card: #ffffff;
+  --color-ink: #1c1917;
+  --color-ink2: #78716c;
+  --color-hairline: #e7e3de;
+  --color-coral: #c6613f;
+  --color-coral2: #d97757;
+
+  /* Claude-Code-style chat overlay (warm dark) */
+  --color-cc-bg: #1f1e1b;
+  --color-cc-panel: #262521;
+  --color-cc-raise: #2e2d28;
+  --color-cc-edge: #3b3a34;
+  --color-cc-text: #e8e6e1;
+  --color-cc-dim: #a09d94;
+
+  --font-sans: var(--font-geist);
   --font-mono: var(--font-jetbrains);
+  --font-ui-mono: var(--font-geist-mono);
 }
 
 html {
@@ -24,9 +44,11 @@ html {
   }
 }
 
+/* Default (overview) is the light theme; the terminal and chat-overlay
+   shells paint their own dark backgrounds on their roots. */
 body {
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
 }
 

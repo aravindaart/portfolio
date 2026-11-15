@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import type { Profile } from "@/lib/types";
 import { TypingText } from "@/components/effects/TypingText";
 import { useMode } from "@/lib/mode";
+import { useChatOverlay } from "@/lib/chat-overlay";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 // WebGL is client-only; keep the globe entirely out of the server bundle.
@@ -11,15 +12,10 @@ const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
   ssr: false,
 });
 
-const scrollToChat = () => {
-  document
-    .getElementById("agent-chat")
-    ?.scrollIntoView({ behavior: "smooth", block: "start" });
-};
-
 export function AgentHero({ profile }: { profile: Profile }) {
   const reduced = useReducedMotion();
-  const { toggle } = useMode();
+  const { setMode } = useMode();
+  const { openChat } = useChatOverlay();
 
   return (
     <header className="relative flex min-h-[92svh] items-center overflow-hidden">
@@ -54,14 +50,14 @@ export function AgentHero({ profile }: { profile: Profile }) {
         <div className="mt-8 flex flex-wrap gap-3 font-mono text-sm">
           <button
             type="button"
-            onClick={scrollToChat}
+            onClick={() => openChat()}
             className="rounded border border-accent bg-accent/10 px-4 py-2.5 text-accent transition-colors hover:bg-accent/20"
           >
             ▶ open live session
           </button>
           <button
             type="button"
-            onClick={toggle}
+            onClick={() => setMode("overview")}
             className="rounded border border-edge px-4 py-2.5 text-dim transition-colors hover:border-accent2 hover:text-accent2"
           >
             human-readable mode

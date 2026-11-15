@@ -13,7 +13,9 @@ function shortUrl(url: string): string {
  */
 export function RecruiterView({ profile }: { profile: Profile }) {
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-16 print:py-4">
+    // The page body is light (overview theme) — this view keeps its own
+    // dark screen styling, while print media stays white.
+    <main className="mx-auto w-full max-w-3xl bg-bg px-6 py-16 text-text shadow-2xl print:bg-white print:py-4 print:shadow-none sm:my-10 sm:rounded-xl">
       <header className="border-b border-edge pb-6 print:border-neutral-300">
         <h1 className="text-3xl font-bold text-text print:text-black">
           {profile.identity.name}

@@ -2,7 +2,6 @@
 
 import { profile } from "@/content/profile";
 import { harness } from "@/content/harness";
-import { AgentChat } from "@/components/agent/AgentChat";
 import { AgentHero } from "@/components/agent/AgentHero";
 import { BootSequence } from "@/components/agent/BootSequence";
 import { ChapterBlock } from "@/components/agent/ChapterBlock";
@@ -12,10 +11,13 @@ import { SkillsBlock } from "@/components/agent/SkillsBlock";
 import { StatusBar } from "@/components/agent/StatusBar";
 import { ToolBlock } from "@/components/agent/ToolBlock";
 import { ContactSection } from "@/components/contact/ContactSection";
+import { useChatOverlay } from "@/lib/chat-overlay";
 
 export function AgentShell() {
+  const { openChat } = useChatOverlay();
+
   return (
-    <main className="bg-grid">
+    <main className="bg-grid min-h-screen bg-bg text-text">
       <BootSequence />
       <StatusBar />
 
@@ -50,12 +52,18 @@ export function AgentShell() {
           Don&apos;t take the page&apos;s word for it
         </h2>
         <p className="mt-2 max-w-xl text-sm leading-relaxed text-text/70">
-          The session below is a real agent: it answers by calling the same
+          The live session is a real agent: it answers by calling the same
           tools this page was rendered with, grounded in the same profile —
-          and you can watch every call it makes.
+          and you can watch every call it makes. Opens full screen.
         </p>
+        <button
+          type="button"
+          onClick={() => openChat()}
+          className="mt-5 rounded border border-accent bg-accent/10 px-4 py-2.5 font-mono text-sm text-accent transition-colors hover:bg-accent/20"
+        >
+          ▶ open live session
+        </button>
       </ToolBlock>
-      <AgentChat />
 
       <ContactSection profile={profile} />
 
